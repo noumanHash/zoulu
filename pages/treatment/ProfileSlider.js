@@ -103,7 +103,7 @@ const ProfileSlider = (props) => {
                   />
                   <div className="datesliderdate text-capitalize">{expert?.user_id.name?.slice(0, 15)}</div>
                   <div className="text-black f-flex align-items-center">
-                    {expert?.rating || 0}
+                    {expert?.rating?.toString().replace(".", ",") || 0}
                     <AiTwotoneStar style={{ marginLeft: 5, color: "#3a7ae4" }} />
                   </div>
                   <div className="datesliderdate text-capitalize">€ {getExpertPriceAgainstService(expert?.expert_services, cart) || 0}</div>

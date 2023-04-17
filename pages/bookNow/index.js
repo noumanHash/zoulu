@@ -27,9 +27,11 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { GoLocation } from "react-icons/go";
+import { IoMdCart } from "react-icons/io";
 var jwt = require("jsonwebtoken");
-const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
   "&:not(:last-child)": {
     borderBottom: 0,
   },
@@ -240,9 +242,14 @@ const Treatments = (props) => {
       var pkgPrice = 0;
       for (const pkgData of serviceList) {
         for (const packages of pkgData.services.packages) {
-          if (packages.package_id.service_id.toString() == service._id.toString()) {
+          if (
+            packages.package_id.service_id.toString() == service._id.toString()
+          ) {
             var pkgoption = service.options.find((e) => {
-              if (packages.package_id.option_id.toString() === e._id.toString() && e.mandatory == true) {
+              if (
+                packages.package_id.option_id.toString() === e._id.toString() &&
+                e.mandatory == true
+              ) {
                 return e;
               }
             });
@@ -265,16 +272,38 @@ const Treatments = (props) => {
       <Protected role={role}>
         <div className={`container-fluid`}>
           <Row className="mt-4">
-            <Col xs={12} sm={12} md={12} lg={8} xl={8} className="treatment-accordian" id="catgoryIDs">
+            <Col
+              xs={12}
+              sm={12}
+              md={12}
+              lg={8}
+              xl={8}
+              className="treatment-accordian"
+              id="catgoryIDs"
+            >
               {categories?.map((data, index) => (
-                <Accordion className={style.treatmentContainerMargin} expanded={expanded === index} onChange={() => handleChange(index)}>
-                  <AccordionSummary expanded={expanded === index} expandIcon={<ExpandMoreIcon className="messageclassIcon" />} aria-controls={"panel1a-content" + index} id={"panel1a-header" + index}>
+                <Accordion
+                  className={style.treatmentContainerMargin}
+                  expanded={expanded === index}
+                  onChange={() => handleChange(index)}
+                >
+                  <AccordionSummary
+                    expanded={expanded === index}
+                    expandIcon={<ExpandMoreIcon className="messageclassIcon" />}
+                    aria-controls={"panel1a-content" + index}
+                    id={"panel1a-header" + index}
+                  >
                     <img src={data?.image} className="messageclassImage" />
-                    <Typography variant="h4" className="text-capitalize messageclassName mt-4 pt-4 ">
+                    <Typography
+                      variant="h4"
+                      className="text-capitalize messageclassName mt-4 pt-4 "
+                    >
                       {data?.name}
                     </Typography>
                     <Typography variant="p" className="messageclass">
-                      {data?.sub_category ? data?.sub_categories?.length : data?.services?.length}
+                      {data?.sub_category
+                        ? data?.sub_categories?.length
+                        : data?.services?.length}
                       Behandlungen
                     </Typography>
                   </AccordionSummary>
@@ -283,7 +312,10 @@ const Treatments = (props) => {
                       {data?.sub_category
                         ? data?.sub_categories?.map((subCategory) => (
                             <Grid item xs={12} sm={6} md={6} lg={4}>
-                              <div className="subCategory" style={{ width: "100%" }}>
+                              <div
+                                className="subCategory"
+                                style={{ width: "100%" }}
+                              >
                                 <img
                                   src={subCategory?.image}
                                   className="accordian-subCaterogry"
@@ -291,9 +323,16 @@ const Treatments = (props) => {
                                     subCategroryHandler(subCategory);
                                   }}
                                 />
-                                <div className="subCategoryText">{subCategory?.name}</div>
+                                <div className="subCategoryText">
+                                  {subCategory?.name}
+                                </div>
                                 {services?.id === subCategory?._id ? (
-                                  <div className="subCategoryIcon" onClick={() => subCategroryHandler(subCategory)}>
+                                  <div
+                                    className="subCategoryIcon"
+                                    onClick={() =>
+                                      subCategroryHandler(subCategory)
+                                    }
+                                  >
                                     <Checkbox
                                       icon={<RadioButtonUncheckedIcon />}
                                       checkedIcon={<CheckCircleIcon />}
@@ -319,17 +358,37 @@ const Treatments = (props) => {
                               return (
                                 <div className="col-lg-6 mb-4 " key={ket}>
                                   <div className={` ${style.CommonHidenCard}`}>
-                                    <div className={style.ShowHeading}>{serviceData?.name}</div>
-                                    <div className={style.PText}>{serviceData?.short_description?.slice(0, 180) || "No Description"}</div>
+                                    <div className={style.ShowHeading}>
+                                      {serviceData?.name}
+                                    </div>
+                                    <div className={style.PText}>
+                                      {serviceData?.short_description?.slice(
+                                        0,
+                                        180
+                                      ) || "No Description"}
+                                    </div>
                                     <div className={style.DisplayCardBottom}>
-                                      {serviceData?.service_experts[0]?.services?.price ? (
+                                      {console.log(
+                                        serviceData?.service_experts[0]
+                                          ?.services?.price,
+                                        serviceData?.price_per_minute,
+                                        "service_experts"
+                                      )}
+                                      {mandatoryPakagePrice(serviceData) &&
+                                        mandatoryPakagePrice(serviceData)}
+                                      {serviceData?.service_experts[0]?.services
+                                        ?.price ||
+                                      serviceData?.price_per_minute !== 0 ? (
                                         <div>
                                           <div className={style.FromText}>
                                             Beginnen Sie mit
-                                            {mandatoryPakagePrice(serviceData) && mandatoryPakagePrice(serviceData)}
                                           </div>
                                           <div className={style.ShowAmount}>
-                                            £{serviceData?.price_per_minute !== 0 ? serviceData?.price_per_minute : serviceData?.service_experts[0]?.services?.price}
+                                            £
+                                            {serviceData?.price_per_minute !== 0
+                                              ? serviceData?.price_per_minute
+                                              : serviceData?.service_experts[0]
+                                                  ?.services?.price}
                                           </div>
                                         </div>
                                       ) : (
@@ -337,7 +396,8 @@ const Treatments = (props) => {
                                           style={{
                                             fontWeight: "500",
                                             fontSize: "14px",
-                                            fontFamily: "PlusJakartaSans-Medium",
+                                            fontFamily:
+                                              "PlusJakartaSans-Medium",
                                             marginTop: "15px",
                                           }}
                                         >
@@ -346,9 +406,18 @@ const Treatments = (props) => {
                                       )}
                                       <ZouluButton
                                         title="Sehen Sie mehr"
-                                        disabled={serviceData?.service_experts[0]?.services?.price ? false : true}
+                                        disabled={
+                                          serviceData?.service_experts[0]
+                                            ?.services?.price ||
+                                          serviceData?.price_per_minute !== 0
+                                            ? false
+                                            : true
+                                        }
                                         className={`${style.ShowBtn} `}
-                                        onClick={() => serviceData && bookingCustomer(serviceData)}
+                                        onClick={() =>
+                                          serviceData &&
+                                          bookingCustomer(serviceData)
+                                        }
                                       />
                                     </div>
                                   </div>
@@ -366,17 +435,31 @@ const Treatments = (props) => {
                             return (
                               <div className="col-lg-6 mb-4 " key={ket}>
                                 <div className={` ${style.CommonHidenCard}`}>
-                                  <div className={style.ShowHeading}>{serviceData?.name}</div>
-                                  <div className={style.PText}>{serviceData?.short_description?.slice(0, 180) || "No Description"}</div>
+                                  <div className={style.ShowHeading}>
+                                    {serviceData?.name}
+                                  </div>
+                                  <div className={style.PText}>
+                                    {serviceData?.short_description?.slice(
+                                      0,
+                                      180
+                                    ) || "No Description"}
+                                  </div>
                                   <div className={style.DisplayCardBottom}>
-                                    {serviceData?.service_experts[0]?.services?.price ? (
+                                    {mandatoryPakagePrice(serviceData) &&
+                                      mandatoryPakagePrice(serviceData)}
+                                    {serviceData?.service_experts[0]?.services
+                                      ?.price ||
+                                    serviceData?.price_per_minute !== 0 ? (
                                       <div>
                                         <div className={style.FromText}>
                                           Beginnen Sie mit
-                                          {mandatoryPakagePrice(serviceData) && mandatoryPakagePrice(serviceData)}
                                         </div>
                                         <div className={style.ShowAmount}>
-                                          €{serviceData?.price_per_minute !== 0 ? serviceData?.price_per_minute : serviceData?.service_experts[0]?.services?.price}
+                                          €
+                                          {serviceData?.price_per_minute !== 0
+                                            ? serviceData?.price_per_minute
+                                            : serviceData?.service_experts[0]
+                                                ?.services?.price}
                                         </div>
                                       </div>
                                     ) : (
@@ -393,9 +476,18 @@ const Treatments = (props) => {
                                     )}
                                     <ZouluButton
                                       title="Sehen Sie mehr"
-                                      disabled={serviceData?.service_experts[0]?.services?.price ? false : true}
+                                      disabled={
+                                        serviceData?.service_experts[0]
+                                          ?.services?.price ||
+                                        serviceData?.price_per_minute !== 0
+                                          ? false
+                                          : true
+                                      }
                                       className={`${style.ShowBtn} `}
-                                      onClick={() => serviceData && bookingCustomer(serviceData)}
+                                      onClick={() =>
+                                        serviceData &&
+                                        bookingCustomer(serviceData)
+                                      }
                                     />
                                   </div>
                                 </div>
@@ -409,12 +501,21 @@ const Treatments = (props) => {
                 </Accordion>
               ))}
               <div style={{ display: "flex", justifyContent: "center" }}>
-                {categories?.length > 0 ? <Pagination currentPage={currentPage} setCurrentPage={(page) => setCurrentPage(page)} pages={pages} /> : null}
+                {categories?.length > 0 ? (
+                  <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={(page) => setCurrentPage(page)}
+                    pages={pages}
+                  />
+                ) : null}
               </div>
             </Col>
             <Col sm={12} md={12} lg={4} xl={4}>
               <div className="sideComponent marginPaddingCard">
-                <div style={{ display: "flex", justifyContent: "center" }} className={style.BookingCompoent}>
+                <div
+                  style={{ display: "flex", justifyContent: "center" }}
+                  className={style.BookingCompoent}
+                >
                   Deine Behandlungen
                 </div>
                 <div
@@ -434,17 +535,27 @@ const Treatments = (props) => {
                     <div>
                       <img src="/Images/locationicon.png"></img>
                     </div>
-                    <div className={style.bookingIconText} style={{ paddingTop: "7px" }}>
+                    <div
+                      className={style.bookingIconText}
+                      style={{ paddingTop: "7px" }}
+                    >
                       <div className={style.bookingAdress}>{address}</div>
                     </div>
                   </div>
                   <div className=" ">
-                    <div className={style.bookingEditText} style={{ cursor: "pointer" }} onClick={() => editLocation()}>
+                    <div
+                      className={style.bookingEditText}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => editLocation()}
+                    >
                       Redigieren
                     </div>
                   </div>
                 </div>
-                <div className={style.BookingTreatment} style={{ width: "96%", margin: "auto", marginTop: "12px" }}>
+                <div
+                  className={style.BookingTreatment}
+                  style={{ width: "96%", margin: "auto", marginTop: "12px" }}
+                >
                   Behandlung
                 </div>
                 {!value ? (
@@ -481,7 +592,9 @@ const Treatments = (props) => {
                               padding: "2px 7px 0 7px",
                             }}
                           >
-                            <div className={style.bookingText}>{data?.name}</div>
+                            <div className={style.bookingText}>
+                              {data?.name}
+                            </div>
                             <div className={style.bookingEditText}>
                               € {data?.charges}
                               .00
@@ -494,8 +607,13 @@ const Treatments = (props) => {
                                   {pkg?.package_id?.title}
                                 </div>
                               ))}
-                              <div className={style.bookingAdress}>{data?.duration} Dauer</div>
-                              <div className={"remove"} onClick={() => handlerRemoveCart(index)}>
+                              <div className={style.bookingAdress}>
+                                {data?.duration} Dauer
+                              </div>
+                              <div
+                                className={"remove"}
+                                onClick={() => handlerRemoveCart(index)}
+                              >
                                 Entfernen
                               </div>
                             </div>
@@ -539,7 +657,9 @@ const Treatments = (props) => {
                                 padding: "2px 7px 0 7px",
                               }}
                             >
-                              <div className={style.bookingText}>{data?.service_id?.name}</div>
+                              <div className={style.bookingText}>
+                                {data?.service_id?.name}
+                              </div>
                               <div className={style.bookingEditText}>
                                 € {data?.charges}
                                 .00
@@ -552,8 +672,13 @@ const Treatments = (props) => {
                                     {pkg?.package_id?.title}
                                   </div>
                                 ))}
-                                <div className={`${style.bookingAdress}`}>{data?.duration} Dauer</div>
-                                <div className={"remove"} onClick={() => handlerRemoveCart(data?._id)}>
+                                <div className={`${style.bookingAdress}`}>
+                                  {data?.duration} Dauer
+                                </div>
+                                <div
+                                  className={"remove"}
+                                  onClick={() => handlerRemoveCart(data?._id)}
+                                >
                                   Entfernen
                                 </div>
                               </div>
@@ -576,26 +701,45 @@ const Treatments = (props) => {
                   }}
                 >
                   <div>
-                    <ZouluButton title="Zeit Wählen" className={`${style.bookingButton} `} onClick={() => setUserLogHandler()} />
+                    <ZouluButton
+                      title="Zeit Wählen"
+                      className={`${style.bookingButton} `}
+                      onClick={() => setUserLogHandler()}
+                    />
                   </div>
                 </div>
               </div>
             </Col>
           </Row>
-          <div className={style.buttonLocationTreatment} onClick={handleShowModal}>
-            <div className={style.treatmentLengthContainer}>{cartData?.array ? cartData?.array?.length : 0}</div>
-            <GoLocation className={style.GoLocationIcon} />
+          <div
+            className={style.buttonLocationTreatment}
+            onClick={handleShowModal}
+          >
+            <div className={style.treatmentLengthContainer}>
+              {cartData?.array ? cartData?.array?.length : 0}
+            </div>
+            <IoMdCart className={style.GoLocationIcon} />
           </div>
           <Modal
             // className="bottom-modal"
-            show={typeof window !== "undefined" && window.innerWidth <= 601 && showModal}
+            show={
+              typeof window !== "undefined" &&
+              window.innerWidth <= 601 &&
+              showModal
+            }
             onHide={() => handleCloseModal()}
             centered
           >
-            <Modal.Header closeButton style={{ borderBottomStyle: "none", borderBottom: "none" }}></Modal.Header>
+            <Modal.Header
+              closeButton
+              style={{ borderBottomStyle: "none", borderBottom: "none" }}
+            ></Modal.Header>
             <Modal.Body>
               <div className="sideComponent marginTreatmentCard">
-                <div style={{ display: "flex", justifyContent: "center" }} className={style.BookingCompoent}>
+                <div
+                  style={{ display: "flex", justifyContent: "center" }}
+                  className={style.BookingCompoent}
+                >
                   Deine Behandlungen
                 </div>
                 <div
@@ -615,17 +759,27 @@ const Treatments = (props) => {
                     <div>
                       <img src="/Images/locationicon.png"></img>
                     </div>
-                    <div className={style.bookingIconText} style={{ paddingTop: "7px" }}>
+                    <div
+                      className={style.bookingIconText}
+                      style={{ paddingTop: "7px" }}
+                    >
                       <div className={style.bookingAdress}>{address}</div>
                     </div>
                   </div>
                   <div className=" ">
-                    <div className={style.bookingEditText} style={{ cursor: "pointer" }} onClick={() => editLocation()}>
+                    <div
+                      className={style.bookingEditText}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => editLocation()}
+                    >
                       Redigieren
                     </div>
                   </div>
                 </div>
-                <div className={style.BookingTreatment} style={{ width: "96%", margin: "auto", marginTop: "12px" }}>
+                <div
+                  className={style.BookingTreatment}
+                  style={{ width: "96%", margin: "auto", marginTop: "12px" }}
+                >
                   Behandlung
                 </div>
                 {!value ? (
@@ -662,7 +816,9 @@ const Treatments = (props) => {
                               padding: "2px 7px 0 7px",
                             }}
                           >
-                            <div className={style.bookingText}>{data?.name}</div>
+                            <div className={style.bookingText}>
+                              {data?.name}
+                            </div>
                             <div className={style.bookingEditText}>
                               € {data?.charges}
                               .00
@@ -675,8 +831,13 @@ const Treatments = (props) => {
                                   {pkg?.package_id?.title}
                                 </div>
                               ))}
-                              <div className={style.bookingAdress}>{data?.duration} Dauer</div>
-                              <div className={"remove"} onClick={() => handlerRemoveCart(index)}>
+                              <div className={style.bookingAdress}>
+                                {data?.duration} Dauer
+                              </div>
+                              <div
+                                className={"remove"}
+                                onClick={() => handlerRemoveCart(index)}
+                              >
                                 Entfernen
                               </div>
                             </div>
@@ -720,7 +881,9 @@ const Treatments = (props) => {
                                 padding: "2px 7px 0 7px",
                               }}
                             >
-                              <div className={style.bookingText}>{data?.service_id?.name}</div>
+                              <div className={style.bookingText}>
+                                {data?.service_id?.name}
+                              </div>
                               <div className={style.bookingEditText}>
                                 € {data?.charges}
                                 .00
@@ -733,8 +896,13 @@ const Treatments = (props) => {
                                     {pkg?.package_id?.title}
                                   </div>
                                 ))}
-                                <div className={`${style.bookingAdress}`}>{data?.duration} Dauer</div>
-                                <div className={"remove"} onClick={() => handlerRemoveCart(data?._id)}>
+                                <div className={`${style.bookingAdress}`}>
+                                  {data?.duration} Dauer
+                                </div>
+                                <div
+                                  className={"remove"}
+                                  onClick={() => handlerRemoveCart(data?._id)}
+                                >
                                   Entfernen
                                 </div>
                               </div>
@@ -757,19 +925,15 @@ const Treatments = (props) => {
                   }}
                 >
                   <div>
-                    <ZouluButton title="Zeit Wählen" className={`${style.bookingButton} `} onClick={() => setUserLogHandler()} />
+                    <ZouluButton
+                      title="Zeit Wählen"
+                      className={`${style.bookingButton} `}
+                      onClick={() => setUserLogHandler()}
+                    />
                   </div>
                 </div>
               </div>
             </Modal.Body>
-            {/* <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleCloseModal}>
-                Save Changes
-              </Button>
-            </Modal.Footer> */}
           </Modal>
           <LoginModal
             show={loginModal}
@@ -780,7 +944,12 @@ const Treatments = (props) => {
             value={value}
             setStatus={(e) => setStatus(e)}
           />
-          <SignUpSecondModal show={signUpSecond} setShow={(e) => setSignUpSecond(e)} setLoginModal={(e) => setLoginModal(e)} setValue={(e) => setValue(e)} />
+          <SignUpSecondModal
+            show={signUpSecond}
+            setShow={(e) => setSignUpSecond(e)}
+            setLoginModal={(e) => setLoginModal(e)}
+            setValue={(e) => setValue(e)}
+          />
           <AddressModal
             show={locationModal}
             setShow={(e) => setLocationModal(e)}
@@ -793,7 +962,12 @@ const Treatments = (props) => {
             cartData={cartData}
             setCartData={(e) => setCartData(e)}
           />
-          <DeepTissueMassage show={deepTissueMassage} setShow={(e) => setDeepTissueMassage(e)} setTimeModal={(e) => setTimeModal(e)} serviceId={serviceId} />
+          <DeepTissueMassage
+            show={deepTissueMassage}
+            setShow={(e) => setDeepTissueMassage(e)}
+            setTimeModal={(e) => setTimeModal(e)}
+            serviceId={serviceId}
+          />
           {timeModal && (
             <TimeModal
               show={timeModal}
@@ -810,7 +984,12 @@ const Treatments = (props) => {
               setCart={(e) => setCart(e)}
             />
           )}
-          {viewProfile && <ProfileModal show={viewProfile} setShow={(e) => setViewProfile(e)} />}
+          {viewProfile && (
+            <ProfileModal
+              show={viewProfile}
+              setShow={(e) => setViewProfile(e)}
+            />
+          )}
         </div>
         <Contact />
         <Footer categories={props?.categories} />

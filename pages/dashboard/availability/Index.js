@@ -78,7 +78,10 @@ const MenuProps = {
 };
 function getStyles(name, timeset, theme) {
   return {
-    fontWeight: timeset.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+    fontWeight:
+      timeset.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
   };
 }
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -87,13 +90,13 @@ const Index = () => {
   const [loading, setLoading] = useState();
   const theme = useTheme();
   const [days, setDays] = useState([
-    { day: "Samstag", available: false },
-    { day: "Sonntag", available: false },
     { day: "Montag", available: false },
     { day: "Dienstag", available: false },
     { day: "Mittwoch", available: false },
     { day: "Donnerstag", available: false },
     { day: "Freitag", available: false },
+    { day: "Samstag", available: false },
+    { day: "Sonntag", available: false },
   ]);
   const [timeset, settimeset] = React.useState([]);
   const handleChange = (event) => {
@@ -124,7 +127,10 @@ const Index = () => {
     }
     if (error) return toast.warning(`${day} has invalid start and end times`);
     setLoading(true);
-    const data = { long: values?.profile[0].location?.coordinates[0], lat: values?.profile[0].location?.coordinates[1] };
+    const data = {
+      long: values?.profile[0].location?.coordinates[0],
+      lat: values?.profile[0].location?.coordinates[1],
+    };
     const payload = new FormData();
     payload.append("availability", JSON.stringify(days));
     payload.append(`expertId`, values?._id);
@@ -155,7 +161,8 @@ const Index = () => {
       const response = await Api("get", `api/profile/${values?._id}`);
       if (response?.status === 200) {
         setLoading(false);
-        if (response?.data?.data?.profile[0]?.availability.length > 1) setDays(response?.data?.data?.profile[0]?.availability);
+        if (response?.data?.data?.profile[0]?.availability.length > 1)
+          setDays(response?.data?.data?.profile[0]?.availability);
       } else {
         setLoading(false);
       }
@@ -182,7 +189,9 @@ const Index = () => {
                   <tbody>
                     {days.map((item, index) => (
                       <tr key={index}>
-                        <td className={`${styles.bodyweektitle}`}>{item.day}</td>
+                        <td className={`${styles.bodyweektitle}`}>
+                          {item.day}
+                        </td>
                         <td className={`${styles.bodyweekcheckbox}`}>
                           <div>
                             <Checkbox
@@ -216,7 +225,11 @@ const Index = () => {
                               MenuProps={MenuProps}
                             >
                               {time.map((name) => (
-                                <MenuItem key={name} value={name} style={getStyles(name, timeset, theme)}>
+                                <MenuItem
+                                  key={name}
+                                  value={name}
+                                  style={getStyles(name, timeset, theme)}
+                                >
                                   {name}
                                 </MenuItem>
                               ))}
@@ -242,7 +255,11 @@ const Index = () => {
                               MenuProps={MenuProps}
                             >
                               {time.map((name) => (
-                                <MenuItem key={name} value={name} style={getStyles(name, timeset, theme)}>
+                                <MenuItem
+                                  key={name}
+                                  value={name}
+                                  style={getStyles(name, timeset, theme)}
+                                >
                                   {name}
                                 </MenuItem>
                               ))}
@@ -263,7 +280,11 @@ const Index = () => {
                   float: "right",
                 }}
               >
-                <ZouluButton title="Aktualisieren" className={styles.updateAvailablebuton} onClick={() => addAvailability()} />
+                <ZouluButton
+                  title="Aktualisieren"
+                  className={styles.updateAvailablebuton}
+                  onClick={() => addAvailability()}
+                />
               </div>
             </div>{" "}
           </div>

@@ -54,9 +54,19 @@ function RatingModalBookings(props) {
         }
       });
     });
-    avrgRating = rating / length;
-    return avrgRating;
+    // avrgRating = rating / length;
+    avrgRating = (rating / length).toFixed(1);
+    return avrgRating.replace(".", ",");
+    // return avrgRating;
+    // return avrgRating.toLocaleString("de-DE", {
+    //   minimumFractionDigits: 1,
+    //   maximumFractionDigits: 1,
+    // });
   };
+  //   let formattedRating = ratingHandler.toLocaleString('de-DE', {
+  //     minimumFractionDigits: 1,
+  //     maximumFractionDigits: 1
+  // }).replace('.', ',');
   const ReviewsPerson = () => {
     var rating = 0;
     var length = 0;
@@ -96,8 +106,8 @@ function RatingModalBookings(props) {
         </Modal.Header>
         <Modal.Body>
           <div className={styles.AllreviewContainer}>
-            <div className={styles.allreviewText}>All Reviews</div>
-            <div className={styles.ratingsreviews}>ratings & reviews</div>
+            <div className={styles.allreviewText}>Alle Bewertungen</div>
+            <div className={styles.ratingsreviews}>Kundenbewertungen</div>
             <div className="mt-4">
               <div className={styles.flexCenterMain}>
                 <div>
@@ -111,13 +121,13 @@ function RatingModalBookings(props) {
                   ))}
                 </div>
                 <div>
-                  <div className={`${styles.ratingCount} mt-2 pt-2`}>{Math.round(ratingHandler() || 0)}</div>
+                  <div className={`${styles.ratingCount} mt-2 pt-2`}>{Math.round(ratingHandler()?.toString().replace(".", ",") || 0)}</div>
                   <div className={styles.ratingCenter}>
                     <Stack spacing={1} className="stackRating-RatingModals  mt-3" style={{ width: "155px" }}>
                       <Rating readOnly name="half-rating" defaultValue={ratingHandler()} precision={0.5} style={{ color: "#ffffff" }} />
                     </Stack>
                   </div>
-                  <div className={`${styles.basedReviewTitle} mt-2`}>based on {ReviewsPerson()} reviews</div>
+                  <div className={`${styles.basedReviewTitle} mt-2`}>Basierend auf {ReviewsPerson()} Bewertungen</div>
                 </div>
               </div>
             </div>

@@ -76,6 +76,7 @@ function AddressModal(props) {
             <div className="GooglePlacesAutocomplete blueArrow">
               <GooglePlacesAutocomplete
                 apiKey={`${process.env.NEXT_PUBLIC_REACT_APP_MAPS_API}`}
+                placeholder="Enter a location..."
                 selectProps={{
                   value,
                   onChange: (e) => {

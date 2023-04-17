@@ -188,6 +188,7 @@ const CustomerProfile = (props) => {
                                 });
                               });
                           },
+                          placeholder: "Gib deine Wunschadresse ein…",
                         }}
                       />
                     </div>

@@ -7,6 +7,7 @@ import RatingModalBookings from "./RatingModalBookings";
 import RatingModal from "./RatingModal";
 import ZouluButton from "../../Common/ZouluButton/ZouluButton";
 import { Rating } from "@mui/material";
+import "moment/locale/de";
 const RightTable = (props) => {
   const { data, setLoading } = props;
   const [booking, setBooking] = useState(null);
@@ -51,7 +52,6 @@ const RightTable = (props) => {
     let start_time_stamps = "1970-10-10" + "T" + start_time + "";
     return { start_time_stamps, end_time_stamps };
   };
-  console.log(booking);
   return (
     <Fragment>
       {data?.map((row, index) =>
@@ -60,7 +60,7 @@ const RightTable = (props) => {
             <div className="flex-calenderBox-Btns">
               <div className="d-flex pt-1">
                 <div className="calenderBookingBox mt-1">
-                  <div className="weekNameCalender">{moment(concatDate(value?.date, value?.start_time)).format("ddd")}</div>
+                  <div className="weekNameCalender">{moment(concatDate(value?.date, value?.start_time)).locale("de").format("dddd").slice(0, 3)}</div>
                   <div className="weekDayCalender">{moment(concatDate(value?.date, value?.start_time)).format("DD")}</div>
                   <div className="monthNameCalender">{moment(concatDate(value?.date, value?.start_time)).format("MMM")}</div>
                 </div>
@@ -68,12 +68,15 @@ const RightTable = (props) => {
                   <div className="BookingMassage-Name">{value?.service_id?.name}</div>
                   <div className="BookingMassage-Time">{value?.duration} mins</div>
                   <div className="BookingMassage-Time">
-                    {Math.round(moment.duration(value?.duration, "minute").asHours())} hour message {moment(getEndTime(value?.start_time, value?.duration)?.start_time_stamps).format("hh:mm a")}-
-                    {moment(getEndTime(value?.start_time, value?.duration)?.end_time_stamps).format("hh:mm a")}
+                    Uhrzeit: {moment(getEndTime(value?.start_time, value?.duration)?.start_time_stamps).format("hh:mm a")}-
+                    {moment(getEndTime(value?.start_time, value?.duration)?.end_time_stamps).format("hh:mm a")} Uhr
+                    {/* {Math.round(moment.duration(value?.duration, "minute").asHours())} hour message {moment(getEndTime(value?.start_time, value?.duration)?.start_time_stamps).format("hh:mm a")}-
+                    {moment(getEndTime(value?.start_time, value?.duration)?.end_time_stamps).format("hh:mm a")} */}
                   </div>
                 </div>
               </div>
               <div className="d-flex mt-2">
+                {console.log("value?.status", value?.status)}
                 {value?.status === "confirmed" ? null : value?.status === "pending" ? (
                   <div
                     className="bookingCancel-btn "
@@ -84,14 +87,17 @@ const RightTable = (props) => {
                       }, 200);
                     }}
                   >
-                    Cancel
+                    Stornieren
                   </div>
                 ) : value?.status === "cancelled" ? (
-                  <div className="bookingCancel-text">{value?.status}</div>
+                  <>
+                    <div className="bookingCancel-text">{value?.status}</div>
+                    {console.log("value?.status", value?.status)}
+                  </>
                 ) : null}
                 {value?.status === "confirmed" && value?.rating === 0 && (
                   <ZouluButton
-                    title={"Bewerten Sie die Sitzung"}
+                    title={"Bewerte deine Behandlung"}
                     className="comfirmationBooking-btn "
                     onClick={() => {
                       setBooking({ service: value, row: row });
@@ -124,11 +130,15 @@ const RightTable = (props) => {
         <CustomDeleteModal
           showModal={showModal}
           hideModal={() => setShowModal(false)}
-          title="Confirmation"
-          subTitle={booking?.service?.status === "completed" ? "Are you sure you want to confirm booking ? This can't be undone" : "Are you sure you want to cancel booking ? This can't be undone"}
+          title="Bestätigung"
+          subTitle={
+            booking?.service?.status === "completed"
+              ? "Bist du sicher, dass du die Buchung bestätigen möchtest? Das kann nicht rückgängig gemacht werden"
+              : "Sind Sie sicher, dass Sie die Buchung stornieren möchten ? Das kann nicht rückgängig gemacht werden"
+          }
           callback={() => (booking?.service?.status === "completed" ? confirmedBooking() : deleteBooking())}
           setLoading={setLoading}
-          btnTitle={booking?.service?.status === "completed" ? "Confirm" : "Cancel"}
+          btnTitle={booking?.service?.status === "completed" ? "Bestätigen" : "Schließen"}
         />
       )}
       {showAddRatingModal && <RatingModal show={showAddRatingModal} data={booking} setShow={(e) => setShowAddRatingModal(e)} callback={() => props.callback()} setLoading={setLoading} />}

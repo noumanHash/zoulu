@@ -25,33 +25,34 @@ const Home = (props) => {
         <div className={`${styles.PaddingHomeScreenMain} row`}>
           <div className="col-lg-7 col-xl-7  col-md-12">
             <div className={styl.PaddingimgLeft}>
-              <div className={styl.HomeSalon}>
-                Mobiler Service für Massage, Physiotherapie & Beauty
-              </div>
+              <div className={styl.HomeSalon}>Mobiler Service für Massage, Physiotherapie & Beauty</div>
               <div className={styl.MainText1}>
+                Zoulu.
+                <span style={{ color: "#027CFF" }}>
+                  Massage<span style={{ color: "#000" }}>,</span>Beauty{" "}
+                </span>{" "}
+                <br />
+                und <span style={{ color: "#027CFF" }}> Gesundheit</span>
+                <span style={{ color: "#000" }}>.</span>
+                <br />
+                Hol es dir nach Hause.
+              </div>
+              {/* <div className={styl.MainText1}>
                 Zu Hause.
                 <span style={{ color: "#027CFF" }}>Massage Beauty </span>
                 and <span style={{ color: "#027CFF" }}> Wellness</span>
-              </div>
+              </div> */}
               <div className={`${styl.CommonPeragraphHead} mt-4 `}>
-                Unsere zertifizierten Experten bringen deine Wunschbehandlung zu
-                dir nach Hause, ins Hotel oder ins Büro • Einfach • Schnell •
-                Sicher
+                Unsere zertifizierten Experten bringen deine Wunschbehandlung zu dir nach Hause, ins Hotel oder ins Büro • Einfach • Schnell • Sicher
               </div>
               <div className={`${styles.CommonClass} `}>
                 <Link href="/bookNow">
-                  <ZouluButton
-                    title="Jetzt Buchen"
-                    className={styl.HeadHomeButton}
-                  />
+                  <ZouluButton title="Jetzt Buchen" className={styl.HeadHomeButton} />
                 </Link>
                 <Link href="webVersion">
                   <div className={`${styl.LearnDivClass}`}>
                     Experte Werden
-                    <img
-                      src={"/Images/learnicon.png"}
-                      className={styles.LearnIconClass}
-                    />
+                    <img src={"/Images/learnicon.png"} className={styles.LearnIconClass} />
                   </div>
                 </Link>
               </div>
@@ -64,89 +65,52 @@ const Home = (props) => {
       </div>
       <div className="row mt-5 p-0 m-0">
         <div className={`col-lg-12 mt-5 ${styl.FavoriteTreat}`}>
-          Genieße deine <br />{" "}
-          <span style={{ color: "#3A7AE4" }}> Wunschbehandlung </span>
+          Genieße deine <br /> <span style={{ color: "#3A7AE4" }}> Wunschbehandlung </span>
           Zu Hause
         </div>
         <center className="mt-5 pt-1">
           <div className="row widthHomeImages">
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div className={`${styl.bgImageContainer} ${styl.NailsBg}`}>
-                Nägel
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.NailsBg}`}>Nägel</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.MassageBg} ${styl.MtSmall}`}
-              >
-                Massage
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.MassageBg} ${styl.MtSmall}`}>Massage</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.SprayBg} ${styl.mrginBigScreen}`}
-              >
-                Spray Tan
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.SprayBg} ${styl.mrginBigScreen}`}>Spray Tan</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.WaxingBg} ${styl.mrginBigScreen}`}
-              >
-                Waxing
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.WaxingBg} ${styl.mrginBigScreen}`}>Waxing</div>
             </div>
           </div>
           <div className="row widthHomeImages" style={{ marginTop: "21px" }}>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div className={`${styl.bgImageContainer} ${styl.FacialsBg} `}>
-                Kosmetik
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.FacialsBg} `}>Kosmetik</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.LashesBg} ${styl.MtSmall}`}
-              >
-                Wimpern
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.LashesBg} ${styl.MtSmall}`}>Wimpern</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.HairBg} ${styl.mrginBigScreen}`}
-              >
-                Haare
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.HairBg} ${styl.mrginBigScreen}`}>Haare</div>
             </div>
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer} ${styl.MakeupBg} ${styl.mrginBigScreen}`}
-              >
-                Makeup
-              </div>
+              <div className={`${styl.bgImageContainer} ${styl.MakeupBg} ${styl.mrginBigScreen}`}>Makeup</div>
             </div>
           </div>
           <div className="row widthHomeImages" style={{ marginTop: "21px" }}>
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <div className={`${styl.bgImageContainer2} ${styl.BrowsBg}`}>
-                Augenbrauen
-              </div>
+              <div className={`${styl.bgImageContainer2} ${styl.BrowsBg}`}>Augenbrauen</div>
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-              <div
-                className={`${styl.bgImageContainer2} ${styl.HealthBg} ${styl.MtSmall}`}
-              >
-                Physio
-              </div>
+              <div className={`${styl.bgImageContainer2} ${styl.HealthBg} ${styl.MtSmall}`}>Physio</div>
             </div>
           </div>
         </center>
       </div>
       {/* how it works  */}
       <div className={`row ${styles.DisplayDivWrk}   m-0 p-0`}>
-        <div className={`${styles.HowItWorkText} mt-3`}>
-          Wie funktioniert Zoulu?
-        </div>
+        <div className={`${styles.HowItWorkText} mt-3`}>Wie funktioniert Zoulu?</div>
         {/* <div className={`${styles.CommonPeragraph} mt-3`}></div> */}
       </div>
       {/* cards div */}
@@ -157,13 +121,8 @@ const Home = (props) => {
               <div className={styles.Card}>
                 <div className={styles.CardPaddingDiv}>
                   <img src={"/Images/Card1.png"} className={styles.CrdImg} />
-                  <div className={`${styles.CardHeading} mt-4`}>
-                    Wähle deine Wunschbehandlung
-                  </div>
-                  <div className={` ${styles.CommonPeragraph} mt-4`}>
-                    Wähle eine von zahlreichen Behandlungen aus den Kategorien
-                    Massage, Physiotherapie und Beauty. Alles bei dir zu Hause.
-                  </div>
+                  <div className={`${styles.CardHeading} mt-4`}>Wähle deine Wunschbehandlung</div>
+                  <div className={` ${styles.CommonPeragraph} mt-4`}>Wähle eine von zahlreichen Behandlungen aus den Kategorien Massage, Physiotherapie und Beauty. Alles bei dir zu Hause.</div>
                 </div>
               </div>
             </div>
@@ -171,20 +130,12 @@ const Home = (props) => {
               <div className={styles.ActiveCard}>
                 <div className={styles.CardPaddingDiv}>
                   <img src={"/Images/Card2.png"} className={styles.CrdImg} />
-                  <div
-                    className={`${styles.CardHeading} mt-4 `}
-                    style={{ color: "white" }}
-                  >
+                  <div className={`${styles.CardHeading} mt-4 `} style={{ color: "white" }}>
                     Wähle deinen Experten{" "}
                   </div>
-                  <div
-                    className={`${styles.CommonPeragraph} mt-4`}
-                    style={{ color: "white" }}
-                  >
-                    Entscheide Dich für einen unserer vielen zertifizieren
-                    Experten. Du kannst Profile, Bewertungen und Rezensionen
-                    durchsuchen, um sicherzustellen, dass du den passenden
-                    Experten auswählst.
+                  <div className={`${styles.CommonPeragraph} mt-4`} style={{ color: "white" }}>
+                    Entscheide Dich für einen unserer vielen zertifizieren Experten. Du kannst Profile, Bewertungen und Rezensionen durchsuchen, um sicherzustellen, dass du den passenden Experten
+                    auswählst.
                   </div>
                 </div>
               </div>
@@ -193,13 +144,9 @@ const Home = (props) => {
               <div className={styles.Card1}>
                 <div className={styles.CardPaddingDiv}>
                   <img src={"/Images/Card3.png"} className={styles.CrdImg} />
-                  <div className={` ${styles.CardHeading} mt-4 `}>
-                    Wähle Ort und Zeit
-                  </div>
+                  <div className={` ${styles.CardHeading} mt-4 `}>Wähle Ort und Zeit</div>
                   <div className={`${styles.CommonPeragraph} mt-4`}>
-                    Wähle aus zu welcher Zeit und an welchem Ort du deine
-                    Wunschbehandlung genießen willst. Du erkennst dabei auch
-                    welcher Experte zu der selektierten Zeit wählbar ist.{" "}
+                    Wähle aus zu welcher Zeit und an welchem Ort du deine Wunschbehandlung genießen willst. Du erkennst dabei auch welcher Experte zu der selektierten Zeit wählbar ist.{" "}
                   </div>
                 </div>
               </div>
@@ -238,47 +185,29 @@ const Home = (props) => {
                 Excellent - based on
                 <div className={styl.reviewsMargin}> 0 review</div>
               </div>
-              <Rating
-                size="small"
-                className={`${styl.RatingBlue}`}
-                name="simple-controlled"
-                value={1}
-                readOnly
-              />
+              <Rating size="small" className={`${styl.RatingBlue}`} name="simple-controlled" value={1} readOnly />
               <div className={`${styl.TrustpilotMargin} d-flex`}>
                 <img src={"/Images/tikicon.png"} className={styl.TikImage} />
                 <div className={styl.TrustHeading}>Trustpilot</div>
               </div>
             </div>
           </div>
-          <div className={`${styl.ProfSliderContainer}  m-0 p-0`}>
-            {/* <TrustSlider /> */}
-          </div>
+          <div className={`${styl.ProfSliderContainer}  m-0 p-0`}>{/* <TrustSlider /> */}</div>
         </div>
       </div>
       {/* blue bar  */}
       <div className={`${styles.BlueCardDiv} `}>
-        <div className={`${styles.BlueCardHead} mt-3 pt-3`}>
-          Zoulu - Die Plattform für mobile Massagen, Beauty und Physiotherapie
-        </div>
-        <div className={` ${styles.BlueCardText} mt-3`}>
-          Trete heute noch unserem Zoulu-Netzwerk bei und arbeite als
-          unabhängiger Therapeut zu deinen eigenen Bedingungen.
-        </div>
+        <div className={`${styles.BlueCardHead} mt-3 pt-3`}>Zoulu - Die Plattform für mobile Massagen, Beauty und Physiotherapie</div>
+        <div className={` ${styles.BlueCardText} mt-3`}>Trete heute noch unserem Zoulu-Netzwerk bei und arbeite als unabhängiger Therapeut zu deinen eigenen Bedingungen.</div>
         <Link href="/webVersion">
-          <ZouluButton
-            title="Jetzt Bewerben"
-            className={`${styles.ColoredSignButton}`}
-          />
+          <ZouluButton title="Jetzt Bewerben" className={`${styles.ColoredSignButton}`} />
         </Link>
       </div>
       {/* FAQ */}
       <div className={` row ${styles.BookingDiv}  m-0 p-0 `}>
         <div className="col-lg-6 ">
           <div className={styles.QuestionsPadding}>
-            <div className={styles.MainTextFrequently}>
-              Häufig gestellte Fragen
-            </div>
+            <div className={styles.MainTextFrequently}>Häufig gestellte Fragen</div>
             {/* <div className={`${styles.CommonPeragraphFrequently}  mt-4`}></div> */}
           </div>
         </div>

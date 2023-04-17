@@ -11,7 +11,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
-import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-google-places-autocomplete";
 import { Api } from "../../utils/Api";
 import Loader from "../../Components/Loader";
 import AuthProtected from "../../utils/AuthProtected";
@@ -88,7 +91,9 @@ const Index = (props) => {
       toast.success(response?.data?.msg);
     } else {
       setLoading(false);
-      toast.warning(stripeId ? "please check your stripe account Id" : response?.data?.msg);
+      toast.warning(
+        stripeId ? "please check your stripe account Id" : response?.data?.msg
+      );
     }
   };
   const connectWithStripe = async () => {
@@ -100,7 +105,7 @@ const Index = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setShowMap(true);
-    }, 3000);
+    }, 1000);
   }, [showMap]);
   return (
     <SidebarWrapper>
@@ -111,7 +116,11 @@ const Index = (props) => {
             <div className={style.profileCardContainer}>
               <div className={style.ContainerDiv}>
                 <Badge
-                  onClick={img?.imagePreview ? () => window.open(img?.imagePreview, "blank") : null}
+                  onClick={
+                    img?.imagePreview
+                      ? () => window.open(img?.imagePreview, "blank")
+                      : null
+                  }
                   overlap="circular"
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                   badgeContent={
@@ -127,7 +136,9 @@ const Index = (props) => {
                           setProfileImage({
                             ...img,
                             image: e.target.files[0],
-                            imagePreview: URL.createObjectURL(e.target.files[0]),
+                            imagePreview: URL.createObjectURL(
+                              e.target.files[0]
+                            ),
                           })
                         }
                         style={{ display: "none" }}
@@ -135,7 +146,17 @@ const Index = (props) => {
                     </Avatar>
                   }
                 >
-                  <Avatar alt="Travis Howard" style={{ width: "120px", height: "120px" }} src={img?.imagePreview ? img?.imagePreview : img ? img : "/Images/avatarIcon.png"}></Avatar>
+                  <Avatar
+                    alt="Travis Howard"
+                    style={{ width: "120px", height: "120px" }}
+                    src={
+                      img?.imagePreview
+                        ? img?.imagePreview
+                        : img
+                        ? img
+                        : "/Images/avatarIcon.png"
+                    }
+                  ></Avatar>
                 </Badge>
               </div>
               <div> </div>
@@ -180,49 +201,81 @@ const Index = (props) => {
                   <div className={style.flexNotificationProfile}>
                     <div style={{ display: "flex" }}>
                       <div className={style.addressProfileTitle}>Adresse</div>
-                      <img src="/Images/Maskgroup.png" className={style.MaskgroupIcon} />
+                      <img
+                        src="/Images/Maskgroup.png"
+                        className={style.MaskgroupIcon}
+                      />
                     </div>
                     <div className={style.addressProfileText}>
-                      Definiere hier in welchem gebiet du deine Dienstleistungen anbieten möchtest. Definiere hierzu deine Adresse und den gewünschten Umreis, in dem Deine für Kunden sichtbar sein
+                      Definiere hier in welchem gebiet du deine Dienstleistungen
+                      anbieten möchtest. Definiere hierzu deine Adresse und den
+                      gewünschten Umreis, in dem Deine für Kunden sichtbar sein
                       sollen.
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className=" col-lg-6 mt-4">
-                    <TextField fullWidth label="Aktuelle Adresse" type={"text"} value={address ?? ""} placeholder={address} disabled className={`${style.EditInput} mb-4`} />
+                    <TextField
+                      fullWidth
+                      label="Aktuelle Adresse"
+                      type={"text"}
+                      value={address ?? ""}
+                      placeholder={address}
+                      disabled
+                      className={`${style.EditInput} mb-4`}
+                    />
                     <br />
                   </div>
                   <div className=" col-lg-6 mt-4">
-                    <TextField label="Radius(Km)" fullWidth type={"number"} id="fullWidth" className={`${style.EditInput} mb-4`} value={radius ?? ""} onChange={(e) => setRadius(e.target.value)} />
+                    <TextField
+                      label="Radius(Km)"
+                      fullWidth
+                      type={"number"}
+                      id="fullWidth"
+                      className={`${style.EditInput} mb-4`}
+                      value={radius ?? ""}
+                      onChange={(e) => setRadius(e.target.value)}
+                    />
                     <br />
                   </div>
-                  <div className={`${styles.InputLabelProfile} pt-0`}>Adresse aktualisieren</div>
+                  <div className={`${styles.InputLabelProfile} pt-0`}>
+                    Adresse aktualisieren
+                  </div>
                   <div className=" col-lg-6 ">
-                    <div className={styles.select2ndstepGoogleAutoCompleteprofile}>
+                    <div
+                      className={styles.select2ndstepGoogleAutoCompleteprofile}
+                    >
                       <div className="GooglePlacesAutocomplete2ndStep">
                         <GooglePlacesAutocomplete
                           apiKey={`${process.env.NEXT_PUBLIC_REACT_APP_MAPS_API}`}
                           selectProps={{
                             onChange: (e) => {
                               setAddress(e.label);
+                              setShowMap(false);
                               geocodeByAddress(e.label)
                                 .then((results) => getLatLng(results[0]))
                                 .then(({ lat, lng }) => {
                                   setLocation({ lat: lat, long: lng });
                                 });
                             },
+                            placeholder: "Gib deine Wunschadresse ein…",
                           }}
                         />
                       </div>
                     </div>
                     <br />
                   </div>
-                  <div className={`${styles.InputLabelProfileStripeId} pt-0`}></div>
+                  <div
+                    className={`${styles.InputLabelProfileStripeId} pt-0`}
+                  ></div>
                   <div className=" col-lg-12 pt-1 d-flex align-items-center">
                     {stripeId ? (
                       <>
-                        <p className="mt-3" style={{ fontFamily: "PlusJakartaSans-bold" }}>
+                        <p
+                          className="mt-3"
+                          style={{ fontFamily: "PlusJakartaSans-bold" }}
+                        >
                           Stripe-Konto verbunden,
                         </p>
                         <MdOutlineVerified
@@ -235,7 +288,10 @@ const Index = (props) => {
                         />
                       </>
                     ) : (
-                      <Button className={style.ConnectStripBtn} onClick={() => (stripeId ? null : connectWithStripe())}>
+                      <Button
+                        className={style.ConnectStripBtn}
+                        onClick={() => (stripeId ? null : connectWithStripe())}
+                      >
                         Verbinden Sie sich mit Stripe
                       </Button>
                     )}
@@ -243,10 +299,16 @@ const Index = (props) => {
                   </div>
                   <div className="col-lg-12 mt-4">
                     <div className={style.DisplayContainer}>
-                      <Button className={style.SaveButtonExpertsProfile} onClick={() => expertAdd()}>
+                      <Button
+                        className={style.SaveButtonExpertsProfile}
+                        onClick={() => expertAdd()}
+                      >
                         Änderungen Speichern
                       </Button>
-                      <Button className={style.SaveButtonCustomerProfile} onClick={() => setShow(true)}>
+                      <Button
+                        className={style.SaveButtonCustomerProfile}
+                        onClick={() => setShow(true)}
+                      >
                         Passwort Ändern
                       </Button>
                     </div>
@@ -272,7 +334,13 @@ const Index = (props) => {
           </div>
         </div>
       </div>
-      {values && <ChangePassword userId={values?._id} show={show} setShow={(e) => setShow(e)} />}
+      {values && (
+        <ChangePassword
+          userId={values?._id}
+          show={show}
+          setShow={(e) => setShow(e)}
+        />
+      )}
     </SidebarWrapper>
   );
 };

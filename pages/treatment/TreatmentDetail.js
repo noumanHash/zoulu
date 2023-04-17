@@ -409,7 +409,7 @@ const TreatmentDetail = () => {
                 }}
                 style={{ fontSize: "14px" }}
                 className={styles.bookingButtonReturn}
-                title="Weitere Dienste hinzufügen"
+                title="Weitere Behandlung Hinzufügen"
                 startIcon={
                   <IoIosArrowBack
                   // style={{

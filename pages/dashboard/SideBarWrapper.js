@@ -72,13 +72,13 @@ function ResponsiveDrawer(props) {
       path: "/dashboard/services",
       activeIcon: <BsHeadset className={styles.DashboardSideBarIconsActive} />,
     },
-    {
-      label: "Kunden",
-      // label: "Customers",
-      icon: <ImUsers className={styles.DashboardSideBarIcons} />,
-      path: "/dashboard/customers",
-      activeIcon: <ImUsers className={styles.DashboardSideBarIconsActive} />,
-    },
+    // {
+    //   label: "Kunden",
+    //   label: "Customers",
+    //   icon: <ImUsers className={styles.DashboardSideBarIcons} />,
+    //   path: "/dashboard/customers",
+    //   activeIcon: <ImUsers className={styles.DashboardSideBarIconsActive} />,
+    // },
     {
       label: "Meine Finanzen",
       icon: <HiOutlineCurrencyDollar className={styles.DashboardSideBarIcons} />,
@@ -115,7 +115,7 @@ function ResponsiveDrawer(props) {
       activeIcon: <RiCalendarCheckFill className={styles.DashboardSideBarIconsActive} />,
     },
     {
-      label: "Portfolio",
+      label: "Portefeuille",
       icon: <ImProfile className={styles.DashboardSideBarIcons} />,
       path: "/dashboard/portfolio",
       activeIcon: <ImProfile className={styles.DashboardSideBarIconsActive} />,
@@ -257,21 +257,21 @@ function ResponsiveDrawer(props) {
           <div className="paddingExpertHeader">
             {isLoggedIn && jwt.decode(isLoggedIn)?.data?.profile[0] && jwt.decode(isLoggedIn)?.data?.profile[0]?.stripe_account_id === null ? (
               <div className="HeaderConditionBody">
-                Add Your Stripe Account ID{" "}
+                Fügen Sie Ihre Stripe-Konto-ID hinzu{" "}
                 {isLoggedIn && jwt.decode(isLoggedIn)?.data?.profile[0] && jwt.decode(isLoggedIn)?.data?.profile[0]?.radius <= 0 ? (
-                  <span> & Radius {isLoggedIn && jwt.decode(isLoggedIn)?.data && jwt.decode(isLoggedIn)?.data?.image === null ? <span>& Profile Picture</span> : null}</span>
+                  <span> & Radius {isLoggedIn && jwt.decode(isLoggedIn)?.data && jwt.decode(isLoggedIn)?.data?.image === null ? <span>& Profilbild</span> : null}</span>
                 ) : null}
                 <span className="headerUpdateLink" onClick={() => router.push("/dashboard/profile")}>
-                  Click Here To Update
+                  Klicken Sie hier, um zu aktualisieren
                 </span>
                 <span className="headerUpdateLinkSpacing"> ||</span>
               </div>
             ) : null}
             {isLoggedIn && jwt.decode(isLoggedIn)?.data?.profile[0] && jwt.decode(isLoggedIn)?.data?.profile[0]?.availability?.length === 0 ? (
               <div className="HeaderConditionBody">
-                Add Your Availability.
+                Fügen Sie Ihre Verfügbarkeit hinzu.
                 <span className="headerUpdateLink" onClick={() => router.push("/dashboard/availability/Index")}>
-                  Click Here To Update
+                  Klicken Sie hier, um zu aktualisieren
                 </span>
                 <span className="headerUpdateLinkSpacing"></span>
               </div>

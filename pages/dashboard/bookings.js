@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import { Api } from "../../utils/Api";
 var jwt = require("jsonwebtoken");
 import moment from "moment";
+import "moment/locale/de";
+
 import Pagination from "../../Components/Pagination";
 import Loader from "../../Components/Loader";
 import AuthProtected from "../../utils/AuthProtected";
@@ -122,7 +124,7 @@ const Index = () => {
               aria-label="lab API tabs example"
             >
               <Tab
-                label={`Anstehende`}
+                label={`Anstehende Buchugen`}
                 className={values === "upcoming" ? "activeLink" : "tab_1_style"}
                 value={"upcoming"}
                 style={{ marginRight: "18px" }}
@@ -139,7 +141,7 @@ const Index = () => {
               <div className={`${styles.marginTopBookingTiitle} mt-4`}>
                 {values === "upcoming" ? (
                   <h4 className="pb-4" style={style}>
-                    Bevorstehende Buchungen
+                    Anstehende Buchungen
                   </h4>
                 ) : (
                   <h4 className="pb-4" style={style}>
@@ -155,7 +157,11 @@ const Index = () => {
                             <div className="d-flex pt-1">
                               <div className="calenderBookingBox mt-1">
                                 <div className="weekNameCalender">
-                                  {moment(value?.date).format("ddd")}
+                                  {/* {moment().locale("de").format("dddd")} */}
+                                  {moment(value?.date)
+                                    .locale("de")
+                                    .format("dddd")
+                                    .slice(0, 3)}
                                 </div>
                                 <div className="weekDayCalender ">
                                   {moment(value?.date).format("DD")}
@@ -172,11 +178,7 @@ const Index = () => {
                                   {value?.duration} min
                                 </div>
                                 <div className="BookingMassage-Time">
-                                  Dauer {value?.start_time}-
-                                  {getEndTime(
-                                    value?.start_time,
-                                    value?.duration
-                                  )}
+                                  {/* Dauer {value?.start_time}-{getEndTime(value?.start_time, value?.duration)} */}
                                 </div>
                               </div>
                             </div>
@@ -198,6 +200,7 @@ const Index = () => {
                                     value?.date
                                   ) && value?.status === "pending" ? (
                                     <Button
+                                      // title={"pending"}
                                       className={styles.OnWayCompleted}
                                       onClick={() => {
                                         statusBooking(
@@ -234,7 +237,7 @@ const Index = () => {
                                         )
                                       }
                                     >
-                                      Cancel
+                                      Stornieren
                                     </Button>
                                   ) : null}
                                 </div>

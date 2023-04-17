@@ -31,7 +31,9 @@ const Index = (props) => {
   const [category, setCategory] = useState();
   const [categories, setCategories] = useState([]);
   const [treatments, setTreatments] = useState([]);
-  const [uploadfile, setUploadFile] = useState([{ name: "", desc: "", image: null }]);
+  const [uploadfile, setUploadFile] = useState([
+    { name: "", desc: "", image: null },
+  ]);
   const [value, setValue] = useState();
   useEffect(() => {
     let token = jwt.decode(window.localStorage.getItem("zolu-auth-token"));
@@ -105,7 +107,10 @@ const Index = (props) => {
       payload.append("phone_number", value?.phone_number);
       payload.append("role", value?.role);
       payload.append("radius", value?.profile[0]?.radius);
-      payload.append("availability", JSON.stringify(value?.profile[0]?.availability));
+      payload.append(
+        "availability",
+        JSON.stringify(value?.profile[0]?.availability)
+      );
       for (let i = 0; i < uploadfile.length; i++) {
         payload.append("certificates", uploadfile[i].image);
       }
@@ -178,7 +183,11 @@ const Index = (props) => {
     }
     if (serviceData || result?.length > 0) {
       setLoading(true);
-      const response = await Api("POST", `api/expertPackage/${value?._id}`, payload);
+      const response = await Api(
+        "POST",
+        `api/expertPackage/${value?._id}`,
+        payload
+      );
       if (response.status === 200) {
         setLoading(false);
         toast.success(response?.data?.msg);
@@ -222,14 +231,33 @@ const Index = (props) => {
     setTreatments(data);
     setpackage(pkg);
   };
+
   const dotColor = ["#30D5C8", "#F96E01", "#DCD6CD"];
+  const packageHandler = (service) => {
+    for (const optn of service?.options) {
+      var status = service?.packages?.filter((data) => {
+        if (data?.option_id == optn?._id && optn?.mandatory === true) {
+          return data;
+        }
+      });
+      if (status.length > 0) {
+        // terminate the loop if status has at least one element
+        return true;
+      }
+    }
+    return false; // return false if none of the options had a package
+  };
   return (
     <>
       {loading ? <Loader /> : null}
       <SidebarWrapper>
         <div className={`container-fluid  margin-sidebar`}>
           <div className={`${styles.backgroundCard}`}>
-            <div className={`${styles.myServicesHeading} mt-5 pt-3`} style={{ fontFamily: "PlusJakartaSans-Regular" }} onClick={() => filterData()}>
+            <div
+              className={`${styles.myServicesHeading} mt-5 pt-3`}
+              style={{ fontFamily: "PlusJakartaSans-Regular" }}
+              onClick={() => filterData()}
+            >
               Meine Behandlungen
             </div>
             <div>
@@ -238,15 +266,34 @@ const Index = (props) => {
                   data?.approved ? (
                     <>
                       {console.log(treatments, "treatments")}
-                      <span className={`${styles.TreatmentHeading} text-capitalize`}>{data?.category_id?.name}</span>
+                      <span
+                        className={`${styles.TreatmentHeading} text-capitalize`}
+                      >
+                        {data?.category_id?.name}
+                      </span>
                       {data?.category_id?.services?.map((service, ind) => {
                         if (service?.deleted == false) {
                           return (
                             <>
-                              <Col sm={6} md={6} lg={6} className="AccordionSummary-borderServices mb-2">
-                                <Accordion expanded={expanded === service._id} onChange={handleChange(service._id)}>
-                                  <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
-                                    <Typography sx={{ width: "100%", flexShrink: 0 }} className="text-capitalize">
+                              <Col
+                                sm={6}
+                                md={6}
+                                lg={6}
+                                className="AccordionSummary-borderServices mb-2"
+                              >
+                                <Accordion
+                                  expanded={expanded === service._id}
+                                  onChange={handleChange(service._id)}
+                                >
+                                  <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1bh-content"
+                                    id="panel1bh-header"
+                                  >
+                                    <Typography
+                                      sx={{ width: "100%", flexShrink: 0 }}
+                                      className="text-capitalize"
+                                    >
                                       {service?.name}
                                     </Typography>
                                   </AccordionSummary>
@@ -257,18 +304,31 @@ const Index = (props) => {
                                       }}
                                       className="mb-3"
                                     >
-                                      Servicepreis hinzufügen <span style={{ marginLeft: "4px" }}>({service?.duration} Min)</span>
+                                      Servicepreis hinzufügen{" "}
+                                      <span style={{ marginLeft: "4px" }}>
+                                        ({service?.duration} Min)
+                                      </span>
                                     </h6>
                                     <Row>
-                                      <Col sm={12} md={12} lg={12} className="mb-3">
+                                      <Col
+                                        sm={12}
+                                        md={12}
+                                        lg={12}
+                                        className="mb-3"
+                                      >
                                         <TextField
-                                          label="Add Price"
+                                          disabled={packageHandler(service)}
+                                          label="Preis"
                                           id="outlined-size-small"
                                           value={service?.price}
                                           defaultValue={service?.price}
                                           onChange={(e) => {
-                                            data.category_id.services[ind].price = e.target.value;
-                                            data.category_id.services[ind].isEdited = true;
+                                            data.category_id.services[
+                                              ind
+                                            ].price = e.target.value;
+                                            data.category_id.services[
+                                              ind
+                                            ].isEdited = true;
                                             treatments[index].isEdited = true;
                                             setTreatments([...treatments]);
                                           }}
@@ -285,42 +345,75 @@ const Index = (props) => {
                                         fontSize: "16px",
                                       }}
                                     >
-                                      Packages
+                                      Optionen
                                     </h6>
                                     <Row className="d-flex flex-wrap mt-2">
-                                      {service?.packages?.map((packaged, key) => {
-                                        if (packaged.deleted !== true)
-                                          return (
-                                            <Col xs={12} sm={10} md={6} lg={6} key={key}>
-                                              <FormGroup row>
-                                                <div className="col-12 col-lg-12 label d-flex">
-                                                  <Label htmlFor="address" className="service-label text-capitalize">
-                                                    {packaged?.title} <span style={{ marginLeft: "4px" }}>({packaged?.duration} Min)</span>
-                                                  </Label>
-                                                  <div className="steric-style ml-1">*</div>
-                                                </div>
-                                                <div className="col-12 col-lg-12">
-                                                  <div className="form-group mt-1">
-                                                    <TextField
-                                                      label="Add Price"
-                                                      id="outlined-size-small"
-                                                      value={packaged?.price}
-                                                      onChange={(e) => {
-                                                        handlerInput(e, service?.packages, key, data?._id, index);
-                                                        data.category_id.services[ind].isEdited = true;
-                                                      }}
-                                                      size="small"
-                                                      fullWidth
-                                                    />
+                                      {service?.packages?.map(
+                                        (packaged, key) => {
+                                          if (packaged.deleted !== true)
+                                            return (
+                                              <Col
+                                                xs={12}
+                                                sm={10}
+                                                md={6}
+                                                lg={6}
+                                                key={key}
+                                              >
+                                                <FormGroup row>
+                                                  <div className="col-12 col-lg-12 label d-flex">
+                                                    <Label
+                                                      htmlFor="address"
+                                                      className="service-label text-capitalize"
+                                                    >
+                                                      {packaged?.title}{" "}
+                                                      <span
+                                                        style={{
+                                                          marginLeft: "4px",
+                                                        }}
+                                                      >
+                                                        ({packaged?.duration}{" "}
+                                                        Min)
+                                                      </span>
+                                                    </Label>
+                                                    <div className="steric-style ml-1">
+                                                      *
+                                                    </div>
                                                   </div>
-                                                </div>
-                                              </FormGroup>
-                                            </Col>
-                                          );
-                                      })}
+                                                  <div className="col-12 col-lg-12">
+                                                    <div className="form-group mt-1">
+                                                      <TextField
+                                                        label="Add Price"
+                                                        id="outlined-size-small"
+                                                        value={packaged?.price}
+                                                        onChange={(e) => {
+                                                          handlerInput(
+                                                            e,
+                                                            service?.packages,
+                                                            key,
+                                                            data?._id,
+                                                            index
+                                                          );
+                                                          data.category_id.services[
+                                                            ind
+                                                          ].isEdited = true;
+                                                        }}
+                                                        size="small"
+                                                        fullWidth
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </FormGroup>
+                                              </Col>
+                                            );
+                                        }
+                                      )}
                                     </Row>
                                   </AccordionDetails>
-                                  <ZouluButton title="Preis aktualisieren " className={`${style.updateServiceBtn} mt-5 `} onClick={() => hanlderPrices()} />
+                                  <ZouluButton
+                                    title="Preis aktualisieren "
+                                    className={`${style.updateServiceBtn} mt-5 `}
+                                    onClick={() => hanlderPrices()}
+                                  />
                                 </Accordion>
                               </Col>
                             </>
@@ -334,7 +427,10 @@ const Index = (props) => {
               {findOtherServices()?.length > 0 ? (
                 <>
                   <hr style={{ height: 4 }} />
-                  <div className={`${styles.myServicesHeading} mt-3`} style={{ fontFamily: "PlusJakartaSans-Regular" }}>
+                  <div
+                    className={`${styles.myServicesHeading} mt-3`}
+                    style={{ fontFamily: "PlusJakartaSans-Regular" }}
+                  >
                     Weitere Behandlungen anbieten
                   </div>
                 </>
@@ -344,12 +440,27 @@ const Index = (props) => {
                   <div>
                     <Row className="mt-3">
                       <Col xs={7} sm={6} md={5} lg={2}>
-                        <span className={`${styles.TreatmentHeadingOtherSerivces} text-capitalize`}>{data?.name}</span>
+                        <span
+                          className={`${styles.TreatmentHeadingOtherSerivces} text-capitalize`}
+                        >
+                          {data?.name}
+                        </span>
                       </Col>
                       <Col xs={5} sm={4} md={3} lg={2}>
                         {handleButton(data?._id) === undefined && (
-                          <IconButton color="primary" aria-label={index} component="label" sx={{ marginLeft: "0.5rem" }}>
-                            <input hidden accept="image/*" type="file" onChange={(e) => filehandler(e, data?._id)} id={index} />
+                          <IconButton
+                            color="primary"
+                            aria-label={index}
+                            component="label"
+                            sx={{ marginLeft: "0.5rem" }}
+                          >
+                            <input
+                              hidden
+                              accept="image/*"
+                              type="file"
+                              onChange={(e) => filehandler(e, data?._id)}
+                              id={index}
+                            />
                             <CloudUpload />
                           </IconButton>
                         )}
@@ -363,7 +474,9 @@ const Index = (props) => {
                                   marginLeft: "0.5rem",
                                   cursor: "pointer",
                                 }}
-                                onClick={() => window.open(file?.imageName, "blank")}
+                                onClick={() =>
+                                  window.open(file?.imageName, "blank")
+                                }
                               >
                                 View
                               </span>
@@ -386,7 +499,11 @@ const Index = (props) => {
                               className={styles.TreatmentDotColor}
                             ></div>
                           </div>
-                          <span className={`${styles.TreatmentText} text-capitalize`}>{service?.name}</span>
+                          <span
+                            className={`${styles.TreatmentText} text-capitalize`}
+                          >
+                            {service?.name}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -395,7 +512,13 @@ const Index = (props) => {
               ))}
             </div>
 
-            {booking?.length > 0 && <ZouluButton title="Update " className={`${style.updateServiceBtn} mt-5 `} onClick={() => handlerUploadFile()} />}
+            {booking?.length > 0 && (
+              <ZouluButton
+                title="Update "
+                className={`${style.updateServiceBtn} mt-5 `}
+                onClick={() => handlerUploadFile()}
+              />
+            )}
             <br />
             <PriceModal
               category={category}

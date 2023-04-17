@@ -69,14 +69,15 @@ const handler = async (req, res) => {
         };
 
         const days = [
-          "Samstag",
           "Sonntag",
           "Montag",
           "Dienstag",
           "Mittwoch",
           "Donnerstag",
           "Freitag",
+          "Samstag",
         ];
+
         if (!fields.date || !fields.coordinates || !fields.categoryId)
           return res
             .status(400)
@@ -226,7 +227,9 @@ const handler = async (req, res) => {
           (expert) => expert.expert_services
         );
         for (const expert of expertHavingRadius) {
+          console.log(expert, "availability2");
           const day = selectedDate.getDay();
+
           const availability = expert.availability.find(
             (e) => e.available === true && days[day] === e.day
           );
@@ -264,6 +267,7 @@ const handler = async (req, res) => {
             }
             let currentTime = new Date();
             let selectedTime = new Date(`${fields.date} ${time}`);
+
             if (currentTime.getTime() > selectedTime.getTime()) {
               continue;
             }

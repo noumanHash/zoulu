@@ -185,7 +185,7 @@ function ProfileModal(props) {
               <div>
                 <h4 className={`${styles.ClientName} mb-4 ml-3 text-capitalize`}>{profile?.name}</h4>
                 <div className={styles.Tabcontainer}>
-                  {["About", "Treatments", "Review", "Portfolio"].map((e, i) => (
+                  {["Über", "Behandlungen", "Rezension", "Portefeuille"].map((e, i) => (
                     <div key={e} className={i === tab ? ` ${styles.BorderTab} ${styles.activeTab}` : `${styles.BorderTab}`} onClick={() => setTab(i)}>
                       {e}
                     </div>
@@ -198,7 +198,7 @@ function ProfileModal(props) {
             <div className="row" style={{ marginLeft: "30px", marginTop: "20px" }}>
               <div className={`${styles.TabOne} row`}>
                 <div className="col-5">
-                  <span className={styles.ReviewText}>Reviews & Rating</span>
+                  <span className={styles.ReviewText}>Kundenbewertungen</span>
                   <h4 className={styles.PointText}>{rating || 0}</h4>
                   {Number.isInteger(rating) ? (
                     <Rating style={{ color: "#027CFF" }} name="simple-controlled" value={rating} readOnly />
@@ -206,7 +206,7 @@ function ProfileModal(props) {
                     <Rating style={{ color: "#027CFF" }} name="simple-controlled" defaultValue={rating} precision={0.5} readOnly />
                   )}
                   <br />
-                  <span className={styles.BasedText}>Based on {ReviewsPerson()} reviews</span>
+                  <span className={styles.BasedText}>Basierend auf {ReviewsPerson()} Bewertungen</span>
                 </div>
                 <div className="col-7">
                   <ErrorOutlineIcon className={styles.ErrorIcon} />
@@ -229,7 +229,7 @@ function ProfileModal(props) {
                   <CalendarMonthIcon className={styles.CalenderIcon} />
                   <span className={styles.ProfileRatingText}>
                     {" "}
-                    <b>{confirmed} </b>Bookings completed
+                    <b>{confirmed} </b>Buchungen abgeschlossen
                   </span>
                 </div>
                 {/* <div className="mt-2">

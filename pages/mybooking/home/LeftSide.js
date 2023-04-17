@@ -49,8 +49,8 @@ const LeftSide = () => {
       <div className="container-fluid m-0 p-0 mt-5 pt-2">
         <Box className="tabCustomerBookingZindex" sx={{ width: "100%" }}>
           <Tabs value={value} onChange={(e, value) => setValue(value)} aria-label="lab API tabs example">
-            <Tab label={`Anstehende`} className={value === "upcoming" ? "activeLink" : "tab_1_style"} value={"upcoming"} style={{ marginRight: "18px" }} />
-            <Tab label={`Letzte Buchungens`} className={value === "past" ? "activeLink" : "tab_1_style"} value={"past"} />
+            <Tab label={`Anstehende Buchungen`} className={value === "upcoming" ? "activeLink" : "tab_1_style"} value={"upcoming"} style={{ marginRight: "18px" }} />
+            <Tab label={`Letzte Buchungen`} className={value === "past" ? "activeLink" : "tab_1_style"} value={"past"} />
           </Tabs>
         </Box>
         <div className="pr-0">

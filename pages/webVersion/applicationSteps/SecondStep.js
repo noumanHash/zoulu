@@ -69,6 +69,7 @@ const SecondStep = (props) => {
                           onChange: (e) => {
                             handleChange(e, index, e.label);
                           },
+                          placeholder: "Gib deine Wunschadresse ein…",
                         }}
                       />
                     </div>

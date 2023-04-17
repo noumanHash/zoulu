@@ -11,10 +11,7 @@ import { Api } from "../../../utils/Api";
 import { toast } from "react-toastify";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import GooglePlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-google-places-autocomplete";
+import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import style from "../../../styles/booknow.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -39,25 +36,16 @@ const defaultQuestions = [
     dropdownValue: ["Männlich", "Weiblich", "andere"],
   },
   {
-    question:
-      "Wie viele Buchungen pro Woche suchen Sie weit weg von secrect spa?",
+    question: "Wie viele Buchungen pro Woche suchen Sie weit weg von secrect spa?",
     answer: "",
     type: "dropdown",
-    dropdownValue: [
-      "weniger als 5",
-      "größer als 5",
-      "weniger als 10",
-      "größer als 10",
-    ],
+    dropdownValue: ["weniger als 5", "größer als 5", "weniger als 10", "größer als 10"],
   },
   {
     question: "Welche davon beschreibt Ihre aktuelle Situation am besten?",
     answer: "",
     type: "dropdown",
-    dropdownValue: [
-      " Ich bin in einem Salon oder Spa angestellt",
-      " Ich bin in einem Salon oder Spa angestellt",
-    ],
+    dropdownValue: [" Ich bin in einem Salon oder Spa angestellt", " Ich bin in einem Salon oder Spa angestellt"],
   },
   {
     question: "Wie haben Sie von uns erfahren?",
@@ -76,21 +64,12 @@ const defaultQuestions = [
     question: "Berufserfahrung",
     answer: "",
     type: "dropdown",
-    dropdownValue: [
-      "Weniger als 1 Jahr",
-      "1 Jahr",
-      "1-2 Jahre",
-      "2-3 Jahre",
-      "3 plus Jahr",
-    ],
+    dropdownValue: ["Weniger als 1 Jahr", "1 Jahr", "1-2 Jahre", "2-3 Jahre", "3 plus Jahr"],
   },
 ];
 function getStyles(name, personName, theme) {
   return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+    fontWeight: personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
   };
 }
 function YourApplication(props) {
@@ -229,38 +208,13 @@ function YourApplication(props) {
       <>
         <div className={styles.ContactText}>Kontaktinformationen</div>
         <div className={`${styles.InputLabel} mt-4  `}>Vorname</div>
-        <input
-          fullWidth
-          id="fullWidth"
-          className={styles.SimpleInputDesign}
-          onChange={(e) => setFirstName(e.target.value)}
-          value={firstName}
-        />
+        <input fullWidth id="fullWidth" className={styles.SimpleInputDesign} onChange={(e) => setFirstName(e.target.value)} value={firstName} />
         <div className={styles.InputLabel}>Nachname</div>
-        <input
-          fullWidth
-          id="fullWidth"
-          className={styles.SimpleInputDesign}
-          onChange={(e) => setLastName(e.target.value)}
-          value={lastName}
-        />
+        <input fullWidth id="fullWidth" className={styles.SimpleInputDesign} onChange={(e) => setLastName(e.target.value)} value={lastName} />
         <div className={styles.InputLabel}>E-Mail-Adresse</div>
-        <input
-          fullWidth
-          id="fullWidth"
-          className={styles.SimpleInputDesign}
-          onChange={(e) => setEmailAdress(e.target.value)}
-          value={email}
-        />
+        <input fullWidth id="fullWidth" className={styles.SimpleInputDesign} onChange={(e) => setEmailAdress(e.target.value)} value={email} />
         <div className={styles.InputLabel}>Passwort</div>
-        <input
-          fullWidth
-          id="fullWidth"
-          type="password"
-          className={styles.SimpleInputDesign}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
+        <input fullWidth id="fullWidth" type="password" className={styles.SimpleInputDesign} onChange={(e) => setPassword(e.target.value)} value={password} />
         <div className={styles.InputLabel}>Handynummer</div>
         <div className={styles.WidthInputNumber}>
           <div className="d-flex ">
@@ -302,13 +256,7 @@ function YourApplication(props) {
                 ))}
               </Select>
             </FormControl>
-            <input
-              fullWidth
-              id="fullWidth"
-              className={styles.PhoneNumberInput}
-              onChange={(e) => setNumber(e.target.value)}
-              value={number}
-            />
+            <input fullWidth id="fullWidth" className={styles.PhoneNumberInput} onChange={(e) => setNumber(e.target.value)} value={number} />
           </div>
         </div>
         <div
@@ -331,9 +279,7 @@ function YourApplication(props) {
             {questions?.map((data, index) => {
               return (
                 <>
-                  <div className={styles.InputLabelLocation}>
-                    {data?.question}
-                  </div>
+                  <div className={styles.InputLabelLocation}>{data?.question}</div>
                   {data?.type === "dropdown" ? (
                     <FormControl className={styles.select2ndstep}>
                       <Select
@@ -348,11 +294,7 @@ function YourApplication(props) {
                         inputProps={{ "aria-label": "Without label" }}
                       >
                         {data?.dropdownValue.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                          >
+                          <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
                             {name}
                           </MenuItem>
                         ))}
@@ -373,12 +315,12 @@ function YourApplication(props) {
                                   setLatLong({ lat: lat, long: lng });
                                 });
                             },
+                            placeholder: "Gib deine Wunschadresse ein…",
                           }}
                         />
                       </div>
                     </div>
-                  ) : data?.question ===
-                    "In welchem Umkreis möchtest du arbeiten?" ? (
+                  ) : data?.question === "In welchem Umkreis möchtest du arbeiten?" ? (
                     <div className=" col-lg-12">
                       <div className="d-flex align-items-center">
                         <TextField
@@ -399,8 +341,7 @@ function YourApplication(props) {
                             display: "flex",
                           }}
                         >
-                          Kilometer{" "}
-                          <span style={{ marginLeft: "5px" }}>(km)</span>
+                          Kilometer <span style={{ marginLeft: "5px" }}>(km)</span>
                         </span>
                       </div>
                     </div>
@@ -419,11 +360,7 @@ function YourApplication(props) {
                           inputProps={{ "aria-label": "Without label" }}
                         >
                           {data?.dropdownValue.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                              style={getStyles(name, personName, theme)}
-                            >
+                            <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
                               {name}
                             </MenuItem>
                           ))}
@@ -455,28 +392,16 @@ function YourApplication(props) {
     return (
       <div className="pr-4">
         <div className={styles.ContactText}>Behandlungen</div>
-        <div className={styles.CategoryText}>
-          Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform
-          anbieten möchten
-        </div>
+        <div className={styles.CategoryText}>Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform anbieten möchten</div>
         <div className="row mt-4">
           <div className="col-lg-12">
             {categories?.map((data, key) => {
               return (
                 <>
-                  <div
-                    className={`${styles.Selecteddiv} d-flex justify-space-between`}
-                    key={key}
-                  >
+                  <div className={`${styles.Selecteddiv} d-flex justify-space-between`} key={key}>
                     <div className={style.TimeText}>
-                      <img
-                        src={"/Images/nailicon.png"}
-                        className={styles.MessageIcon}
-                      />
-                      <span className={`${styles.OptionText} ml-5`}>
-                        {" "}
-                        {data?.name}
-                      </span>
+                      <img src={"/Images/nailicon.png"} className={styles.MessageIcon} />
+                      <span className={`${styles.OptionText} ml-5`}> {data?.name}</span>
                     </div>
                     <div className={styles.DownIcon}>
                       {data?.selectedService ? (
@@ -485,9 +410,7 @@ function YourApplication(props) {
                           onClick={() => {
                             data.selectedService = null;
                             setCategories([...categories]);
-                            setServiceIds(
-                              serviceIds?.filter((e) => e !== data?._id)
-                            );
+                            setServiceIds(serviceIds?.filter((e) => e !== data?._id));
                           }}
                         />
                       ) : (
@@ -503,15 +426,9 @@ function YourApplication(props) {
                         </span>
                       )}
                       {showDiv === data?._id ? (
-                        <KeyboardArrowUpIcon
-                          onClick={() => handlerdropdown(data)}
-                          style={{ cursor: "pointer" }}
-                        />
+                        <KeyboardArrowUpIcon onClick={() => handlerdropdown(data)} style={{ cursor: "pointer" }} />
                       ) : (
-                        <KeyboardArrowDownIcon
-                          onClick={() => handlerdropdown(data)}
-                          style={{ cursor: "pointer" }}
-                        />
+                        <KeyboardArrowDownIcon onClick={() => handlerdropdown(data)} style={{ cursor: "pointer" }} />
                       )}
                     </div>
                   </div>
@@ -525,16 +442,9 @@ function YourApplication(props) {
                             marginTop: "10px",
                           }}
                         >
-                          <div
-                            className={`${styles.HidenOptions} d-flex justify-space-between`}
-                          >
+                          <div className={`${styles.HidenOptions} d-flex justify-space-between`}>
                             <div className={style.TimeText}>
-                              <span
-                                className={`${styles.OptionText} ml-5 ${styles.TextSize}`}
-                              >
-                                {" "}
-                                {service?.name}
-                              </span>
+                              <span className={`${styles.OptionText} ml-5 ${styles.TextSize}`}> {service?.name}</span>
                             </div>
                             {data?.selectedService ? (
                               <DoneIcon
@@ -542,9 +452,7 @@ function YourApplication(props) {
                                 onClick={() => {
                                   data.selectedService = null;
                                   setCategories([...categories]);
-                                  setServiceIds(
-                                    serviceIds?.filter((e) => e !== data?._id)
-                                  );
+                                  setServiceIds(serviceIds?.filter((e) => e !== data?._id));
                                 }}
                               />
                             ) : null}
@@ -569,43 +477,21 @@ function YourApplication(props) {
     return (
       <div>
         <div className={styles.ContactText}>Befähigungen</div>
-        <div className={styles.CategoryText}>
-          Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform
-          anbieten möchten{" "}
-        </div>
+        <div className={styles.CategoryText}>Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform anbieten möchten </div>
         {categories?.map((data, index) => (
           <>
             {data?.selectedService ? (
               <div className="d-flex align-items-center mt-4 pt-3" key={data}>
                 <div>
-                  <Button
-                    className={`${styles.UploadButtonDeep}`}
-                    variant="contained"
-                  >
+                  <Button className={`${styles.UploadButtonDeep}`} variant="contained">
                     {data?.name}
                   </Button>
                 </div>
                 <div>
-                  <label
-                    for={index}
-                    startIcon={
-                      <AiOutlineCloudUpload
-                        className={styles.AiOutlineCloudUploadIcon}
-                      />
-                    }
-                    className={styles.UploadButton}
-                    style={{ cursor: "pointer" }}
-                    variant="contained"
-                  >
+                  <label for={index} startIcon={<AiOutlineCloudUpload className={styles.AiOutlineCloudUploadIcon} />} className={styles.UploadButton} style={{ cursor: "pointer" }} variant="contained">
                     Zertifikat hochladen
                   </label>
-                  <input
-                    type="file"
-                    name="upload"
-                    id={index}
-                    onChange={(e) => filehandler(e, data?._id)}
-                    style={{ display: "none" }}
-                  />
+                  <input type="file" name="upload" id={index} onChange={(e) => filehandler(e, data?._id)} style={{ display: "none" }} />
                 </div>
                 {findFileAgainstCertificate(data?._id) ? (
                   <span
@@ -615,12 +501,7 @@ function YourApplication(props) {
                       margin: "0 0 20px 20px",
                       cursor: "pointer",
                     }}
-                    onClick={() =>
-                      window.open(
-                        findFileAgainstCertificate(data?._id)?.imageName,
-                        "blank"
-                      )
-                    }
+                    onClick={() => window.open(findFileAgainstCertificate(data?._id)?.imageName, "blank")}
                   >
                     Zertifikat anzeigen
                   </span>
@@ -684,15 +565,10 @@ function YourApplication(props) {
     return (
       <div className={`${styles.AppplicationContainer} mt-5  m-0 p-0`}>
         <div className={styles.ContactText}>Überblick</div>
-        <div className={styles.CategoryText}>
-          Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform
-          anbieten möchten
-        </div>
+        <div className={styles.CategoryText}>Wählen Sie die Behandlungen, die Sie auf der Serect Spa-Plattform anbieten möchten</div>
         <div className="row">
           <div className="col-lg-12">
-            <div
-              className={`${styles.SelecteddivOverview} d-flex justify-space-between`}
-            >
+            <div className={`${styles.SelecteddivOverview} d-flex justify-space-between`}>
               <div className={style.TimeText}>
                 <DoneIcon className={styles.OverviewDoneIcon} />
                 <span className={`${styles.OptionText} ml-5`}> About Us</span>
@@ -712,9 +588,7 @@ function YourApplication(props) {
             </div>
           </div>
           <div className="col-lg-12">
-            <div
-              className={`${styles.SelecteddivOverview} d-flex justify-space-between`}
-            >
+            <div className={`${styles.SelecteddivOverview} d-flex justify-space-between`}>
               <div className={style.TimeText}>
                 <DoneIcon className={styles.OverviewDoneIcon} />
                 <span className={`${styles.OptionText} ml-5`}> Treatments</span>
@@ -734,15 +608,10 @@ function YourApplication(props) {
             </div>
           </div>
           <div className="col-lg-12">
-            <div
-              className={`${styles.SelecteddivOverview} d-flex justify-space-between`}
-            >
+            <div className={`${styles.SelecteddivOverview} d-flex justify-space-between`}>
               <div className={style.TimeText}>
                 <DoneIcon className={styles.OverviewDoneIcon} />
-                <span className={`${styles.OptionText} ml-5`}>
-                  {" "}
-                  Qualifications
-                </span>
+                <span className={`${styles.OptionText} ml-5`}> Qualifications</span>
               </div>
               <div className={styles.DownIcon}>
                 <div
@@ -765,20 +634,12 @@ function YourApplication(props) {
   const submitApplication = async () => {
     setLoading(true);
     const payload = new FormData();
-    payload.append(
-      "userId",
-      JSON.parse(localStorage.getItem("userData")) || user?.data?._id
-    );
+    payload.append("userId", JSON.parse(localStorage.getItem("userData")) || user?.data?._id);
     payload.append("gender", questions[1]?.answer);
     payload.append("address", questions[0]?.answer);
     payload.append("country", "germany");
     payload.append("questions", JSON.stringify(questions));
-    payload.append(
-      "categories",
-      JSON.stringify(
-        categories?.filter((e) => e?.selectedService)?.map((e) => e?._id)
-      )
-    );
+    payload.append("categories", JSON.stringify(categories?.filter((e) => e?.selectedService)?.map((e) => e?._id)));
     for (const obj of categories) {
       for (const file of values) {
         if (obj?.selectedService && obj?._id === file?.id) {
@@ -802,43 +663,21 @@ function YourApplication(props) {
   return (
     <Fragment>
       {loading ? <Loader /> : null}
-      <Modal
-        show={props.show}
-        onHide={handleClose}
-        animation={false}
-        size="lg"
-        className={`${
-          props.showVerification || props.verifiedModal ? styles.blurrModal : ""
-        }`}
-      >
-        <Modal.Header
-          className={styles.ModalHeaderDiv}
-          style={{ borderTopRightRadius: "17px", borderTopLeftRadius: "17px" }}
-        >
-          <div
-            className={styles.leftApplicationHeader}
-            style={{ width: "90%", margin: "auto" }}
-          >
+      <Modal show={props.show} onHide={handleClose} animation={false} size="lg" className={`${props.showVerification || props.verifiedModal ? styles.blurrModal : ""}`}>
+        <Modal.Header className={styles.ModalHeaderDiv} style={{ borderTopRightRadius: "17px", borderTopLeftRadius: "17px" }}>
+          <div className={styles.leftApplicationHeader} style={{ width: "90%", margin: "auto" }}>
             <div className={styles.ModalHeaderText}> Ihre Bewerbung</div>
             <div className={styles.ModalHeaderLevel}>
-              Schritt {progress === 25 ? "1/" : null}{" "}
-              {progress === 50 ? "2/" : null}
+              Schritt {progress === 25 ? "1/" : null} {progress === 50 ? "2/" : null}
               {progress === 75 ? "3/" : null} {progress === 100 ? "4/" : null}
               <span style={{ color: "rgb(233, 233, 233)" }}>4</span>
             </div>
             <div className={styles.ProgressContainer}>
-              <LinearProgress
-                variant="determinate"
-                value={progress}
-                className={styles.ProgressBarApplicatioons}
-              />
+              <LinearProgress variant="determinate" value={progress} className={styles.ProgressBarApplicatioons} />
             </div>
           </div>
         </Modal.Header>
-        <Modal.Body
-          style={{ background: progress == 25 ? "#F9F9F9" : "white" }}
-          className={`  ${styles.leftApplicationbody}`}
-        >
+        <Modal.Body style={{ background: progress == 25 ? "#F9F9F9" : "white" }} className={`  ${styles.leftApplicationbody}`}>
           <div className={`${styles.AppplicationContainer}  mt-5  m-0 p-0`}>
             {showOverview ? (
               Overview()
@@ -862,17 +701,9 @@ function YourApplication(props) {
           }}
         >
           {showOverview ? (
-            <ZouluButton
-              title="Fortsetzen"
-              className={styles.ApplicationButton}
-              onClick={() => submitApplication()}
-            />
+            <ZouluButton title="Fortsetzen" className={styles.ApplicationButton} onClick={() => submitApplication()} />
           ) : (
-            <ZouluButton
-              title={process > 25 ? "Fortsetzen" : " Jetzt bewerben"}
-              className={styles.ApplicationButton}
-              onClick={() => ProgressState()}
-            />
+            <ZouluButton title={process > 25 ? "Fortsetzen" : " Jetzt bewerben"} className={styles.ApplicationButton} onClick={() => ProgressState()} />
           )}
         </Modal.Footer>
       </Modal>

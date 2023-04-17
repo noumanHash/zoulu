@@ -16,16 +16,16 @@ const Success = (props) => {
       {" "}
       <div className="row  m-0 p-0">
         <div className={`col-lg-12 mt-5 ${styles.CenterData}`}>
-          <h2 className={`${styles.ModalHeading} mt-4`}>Booking completed</h2>
+          <h2 className={`${styles.ModalHeading} mt-4`}>Buchung Abgeschlossen</h2>
           <DoneIcon className={style.ThanksDoneIcon} />
-          <div className={style.ThanksText}>Thank You !</div>
+          <div className={style.ThanksText}>Vielen Dank!</div>
           <div className={style.CompleteText}>
-            Your Booking process is successfully <br /> completed
+            Deine Buchung wurde erfolgreich <br /> abgeschlossen
           </div>
         </div>
 
         <ZouluButton
-          title="My Bookings"
+          title="Meine Buchungen"
           className={`${style.goBack} mt-3`}
           onClick={() => {
             router.push("/mybooking");
