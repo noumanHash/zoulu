@@ -298,12 +298,8 @@ const handler = async (req, res) => {
 
             let selectedTime = new Date(`${fields.date} ${time}`);
             console.log(currentTime, selectedTime, "new Date()");
-            console.log(
-              currentTime.getTime(),
-              selectedTime.getTime(),
-              "getTime"
-            );
-            if (getSecondsFromUTC() > selectedTime.getTime()) {
+            console.log(getSecondsFromUTC(), selectedTime.getTime(), "getTime");
+            if (timestamp > selectedTime.getTime()) {
               continue;
             }
             console.log(time, "after Filterr");
