@@ -265,23 +265,27 @@ const handler = async (req, res) => {
             if (booking) {
               continue;
             }
-            const options = {
-              timeZone: "Asia/Karachi",
-              hour12: false,
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            };
+            // const options = {
+            //   timeZone: "Asia/Karachi",
+            //   hour12: false,
+            //   year: "numeric",
+            //   month: "2-digit",
+            //   day: "2-digit",
+            //   hour: "2-digit",
+            //   minute: "2-digit",
+            //   second: "2-digit",
+            // };
             let currentTime = new Date();
-            var localTime = currentTime.toLocaleString("en-US", options);
+            // var localTime = currentTime.toLocaleString("en-US", options);
 
             let selectedTime = new Date(`${fields.date} ${time}`);
-            console.log(localTime, selectedTime, "new Date()");
-            console.log(localTime.getTime(), selectedTime.getTime(), "getTime");
-            if (localTime.getTime() > selectedTime.getTime()) {
+            console.log(currentTime, selectedTime, "new Date()");
+            console.log(
+              currentTime.getTime(),
+              selectedTime.getTime(),
+              "getTime"
+            );
+            if (currentTime.getTime() > selectedTime.getTime()) {
               continue;
             }
             console.log(time, "after Filterr");
