@@ -276,12 +276,12 @@ const handler = async (req, res) => {
             //   second: "2-digit",
             // };
             const now = new Date();
-            // const localTime = new Date(
-            //   now.toLocaleString("en-US", { timeZone: "Asia/Karachi" })
-            // );
-            const localTime = now.toLocaleString("en-US", {
-              timeZone: "Europe/Berlin",
-            });
+            const localTime = new Date(
+              now.toLocaleString("en-US", { timeZone: "Europe/Berlin" })
+            );
+            // const localTime = now.toLocaleString("en-US", {
+            //   timeZone: "Europe/Berlin",
+            // });
             const timestamp = localTime.getTime();
             let currentTime = new Date();
             function getSecondsFromUTC(secondsToAdd = 0) {
