@@ -267,10 +267,16 @@ const handler = async (req, res) => {
             }
             let currentTime = new Date();
             let selectedTime = new Date(`${fields.date} ${time}`);
-
+            console.log(currentTime, selectedTime, "new Date()");
+            console.log(
+              currentTime.getTime(),
+              selectedTime.getTime(),
+              "getTime"
+            );
             if (currentTime.getTime() > selectedTime.getTime()) {
               continue;
             }
+            console.log(time, "after Filter");
             // const expertService = expertServices.find((es) =>
             //   es.some(
             //     (e) =>
