@@ -281,6 +281,19 @@ const handler = async (req, res) => {
             );
             const timestamp = localTime.getTime();
             let currentTime = new Date();
+            function getSecondsFromUTC(secondsToAdd = 0) {
+              let currentDate = new Date();
+              currentDate.setTime(
+                currentDate.getTime() +
+                  currentDate.getTimezoneOffset() * 60 * 1000
+              );
+              let utcDate = new Date(
+                currentDate.getTime() + secondsToAdd * 1000
+              );
+              let milliseconds = utcDate.getTime();
+              let seconds = milliseconds / 1000;
+              return seconds;
+            }
             // var localTime = currentTime.toLocaleString("en-US", options);
 
             let selectedTime = new Date(`${fields.date} ${time}`);
@@ -290,7 +303,7 @@ const handler = async (req, res) => {
               selectedTime.getTime(),
               "getTime"
             );
-            if (timestamp > selectedTime.getTime()) {
+            if (getSecondsFromUTC() > selectedTime.getTime()) {
               continue;
             }
             console.log(time, "after Filterr");
