@@ -275,6 +275,11 @@ const handler = async (req, res) => {
             //   minute: "2-digit",
             //   second: "2-digit",
             // };
+            const now = new Date();
+            const localTime = new Date(
+              now.toLocaleString("en-US", { timeZone: "Asia/Karachi" })
+            );
+            const timestamp = localTime.getTime();
             let currentTime = new Date();
             // var localTime = currentTime.toLocaleString("en-US", options);
 
@@ -285,7 +290,7 @@ const handler = async (req, res) => {
               selectedTime.getTime(),
               "getTime"
             );
-            if (currentTime.getTime() > selectedTime.getTime()) {
+            if (timestamp > selectedTime.getTime()) {
               continue;
             }
             console.log(time, "after Filterr");
