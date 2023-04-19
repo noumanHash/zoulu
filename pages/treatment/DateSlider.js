@@ -3,7 +3,7 @@ import SwiperCore, { Virtual, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from "../../styles/treatment.module.css";
 import moment from "moment";
-
+import "moment/locale/de";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
