@@ -3,7 +3,9 @@ import styles from "../../styles/payment.module.css";
 import ZouluButton from "../Common/ZouluButton/ZouluButton";
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-const stripe = require("stripe")("sk_test_51MP636JNDOmTcINHfgKrsTMq1lbF9KnIObEUL8KTcBiTw79gMf00zCbLakzTSWhL0fpK8Z6QcHd0234PjugZ21fJ00LDnndRct");
+const stripe = require("stripe")(
+  "sk_test_51MP636JNDOmTcINHfgKrsTMq1lbF9KnIObEUL8KTcBiTw79gMf00zCbLakzTSWhL0fpK8Z6QcHd0234PjugZ21fJ00LDnndRct"
+);
 import "react-credit-cards/es/styles-compiled.css";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -46,7 +48,8 @@ const Index = (props) => {
 
   const onHandleChange = (e) => {
     if (e.target.name == "cvc" && e.target.value.toString().length > 4) return;
-    if (e.target.name == "number" && e.target.value.toString().length > 16) return;
+    if (e.target.name == "number" && e.target.value.toString().length > 16)
+      return;
     setCardValues({
       ...cardValues,
       [e.target.name]: e.target.value,
@@ -102,13 +105,24 @@ const Index = (props) => {
     }
   };
   const stripeCardExpirValidation = (value) => {
+    //test checking stripe expire input
     if (value) {
       if (/^(0[1-9]|1[0-2])\/[0-9]{2}$/i.test(value.trim())) {
         let today = new Date();
-        let CurrentDate = moment(new Date(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()));
+        let CurrentDate = moment(
+          new Date(
+            today.getFullYear() +
+              "-" +
+              (today.getMonth() + 1) +
+              "-" +
+              new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+          )
+        );
         let visaValue = value.split("/");
         let visaDate = new Date(`20${visaValue[1]}`, visaValue[0], 0);
-        return CurrentDate < moment(visaDate) ? undefined : "Please enter valid date";
+        return CurrentDate < moment(visaDate)
+          ? undefined
+          : "Please enter valid date";
       } else {
         return "Invalid date format";
       }
@@ -189,7 +203,10 @@ const Index = (props) => {
       payload.append("address", address);
       payload.append("cardNumber", cardValues?.number);
       payload.append("expiryYear", expire.slice(3, 5));
-      payload.append("expiryMonth", expire.slice(0, 1) == 0 ? expire.slice(1, 2) : expire.slice(0, 2));
+      payload.append(
+        "expiryMonth",
+        expire.slice(0, 1) == 0 ? expire.slice(1, 2) : expire.slice(0, 2)
+      );
       payload.append("cvc", cardValues?.cvc);
       const response = await Api("post", `api/customer/cart`, payload);
       if (response.status === 200) {
@@ -212,35 +229,75 @@ const Index = (props) => {
     return totalcharge;
   };
   useEffect(() => {
-    if (cart[0]?.expert_id && cart[0]?.service_id?._id && cart[0]?.date && location) {
+    if (
+      cart[0]?.expert_id &&
+      cart[0]?.service_id?._id &&
+      cart[0]?.date &&
+      location
+    ) {
       cart?.map((data, index) => {
-        getbooking("value", location, "1", data?.date, data?.service_id?.category_id?._id, data?.service_id?._id, index, data);
+        getbooking(
+          "value",
+          location,
+          "1",
+          data?.date,
+          data?.service_id?.category_id?._id,
+          data?.service_id?._id,
+          index,
+          data
+        );
       });
     }
   }, [location]);
   const getLatLngFromAddress = async (address) => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=AIzaSyC7Jz78vSl5-mHKv4eBOy1fRhmoph6loMA`);
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        address
+      )}&key=AIzaSyC7Jz78vSl5-mHKv4eBOy1fRhmoph6loMA`
+    );
     const data = await response.json();
     const lat = data.results[0].geometry.location.lat;
     const lng = data.results[0].geometry.location.lng;
     setLocation({ lat: lat, long: lng });
   };
-  const getbooking = async (value, location, index, cartDate, cartCategoryid, cartServiceid, key, cartData) => {
+  const getbooking = async (
+    value,
+    location,
+    index,
+    cartDate,
+    cartCategoryid,
+    cartServiceid,
+    key,
+    cartData
+  ) => {
     setLoader(true);
     if (!cartDate) {
     }
     if (cartDate) {
       var date = moment(cartDate).format("YYYY-MM-DD");
     } else {
-      var makeFormat = value?.selectedDate?.date + " " + value?.selectedDate?.month + "," + value?.selectedDate?.year;
+      var makeFormat =
+        value?.selectedDate?.date +
+        " " +
+        value?.selectedDate?.month +
+        "," +
+        value?.selectedDate?.year;
       var date = moment(makeFormat).format("YYYY-MM-DD");
     }
     console.log(date, "date");
 
     const payload = new FormData();
-    payload.append("categoryId", props?.value?.service_id?.category_id?._id || props?.value?.category_id || cartCategoryid);
+    payload.append(
+      "categoryId",
+      props?.value?.service_id?.category_id?._id ||
+        props?.value?.category_id ||
+        cartCategoryid
+    );
     payload.append("serviceId", value?.service_id?._id || cartServiceid);
-    payload.append("packages", JSON.stringify(cartData?.packages?.map((e) => e?.package_id._id)));
+    payload.append(
+      "packages",
+      JSON.stringify(cartData?.packages?.map((e) => e?.package_id._id))
+    );
     payload.append("date", date);
     payload.append("coordinates", JSON.stringify(location));
     const response = await Api("post", `api/expert/availability`, payload);
@@ -290,7 +347,9 @@ const Index = (props) => {
           <div className={`${styles.PaddingContainer} container`}>
             <div className={`${styles.ReverseClass} row `}>
               <div className={"col-xl-5 col-lg-12 "}>
-                <div className={`${styles.CardContainer}   ${styles.PaymentCardsShadow} `}>
+                <div
+                  className={`${styles.CardContainer}   ${styles.PaymentCardsShadow} `}
+                >
                   <div className={styles.CardHeading}>Service-Adresse</div>
                   <div className="d-flex justify-content-between mt-3 mb-4">
                     <div className="d-flex ">
@@ -309,7 +368,10 @@ const Index = (props) => {
                         setLocationModal(true);
                       }}
                     >
-                      <div className={styles.CardText} style={{ cursor: "pointer" }}>
+                      <div
+                        className={styles.CardText}
+                        style={{ cursor: "pointer" }}
+                      >
                         Bearbeiten
                       </div>
                     </div>
@@ -336,27 +398,49 @@ const Index = (props) => {
                     <center>
                       <div className={styles.triangleup}></div>
                     </center>
-                    <div className={styles.tooltipDiv}>Die ausgewählten Experten bedienen nicht die aktuelle Adresse.</div>
+                    <div className={styles.tooltipDiv}>
+                      Die ausgewählten Experten bedienen nicht die aktuelle
+                      Adresse.
+                    </div>
                   </div>
                 ) : null}
-                <div className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}>
-                  <div className={styles.CardHeadingOrder}>Details zur Bestellung</div>
+                <div
+                  className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}
+                >
+                  <div className={styles.CardHeadingOrder}>
+                    Details zur Bestellung
+                  </div>
                 </div>
 
                 {cart?.map((data) => {
                   return (
                     <>
-                      <div className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}>
+                      <div
+                        className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}
+                      >
                         <div className="d-flex justify-content-between mt-4">
                           <div className="d-flex">
                             <div className={styles.CardImage}>
-                              <Avatar src={data?.expert_id?.image ? data?.expert_id?.image : ""} className={styles.ProfileImage} />
+                              <Avatar
+                                src={
+                                  data?.expert_id?.image
+                                    ? data?.expert_id?.image
+                                    : ""
+                                }
+                                className={styles.ProfileImage}
+                              />
                             </div>
-                            <div className={`${styles.CardSmallHeading} mt-1`}>{data?.expert_id?.name}</div>
+                            <div className={`${styles.CardSmallHeading} mt-1`}>
+                              {data?.expert_id?.name}
+                            </div>
                           </div>
                           <div className="d-flex">
-                            <CalendarMonthIcon className={styles.CalenderIcon} />
-                            <p className={styles.TextPlayfairFamily}>{moment(data?.date).format("DD/MM/yyyy")}</p>
+                            <CalendarMonthIcon
+                              className={styles.CalenderIcon}
+                            />
+                            <p className={styles.TextPlayfairFamily}>
+                              {moment(data?.date).format("DD/MM/yyyy")}
+                            </p>
                           </div>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
@@ -366,12 +450,18 @@ const Index = (props) => {
                             </div>
                             <div className={styles.CardSmallHeading}>
                               {data?.service_id?.name}
-                              <div className={styles.MinutesText}>{data?.duration} Minuten </div>
+                              <div className={styles.MinutesText}>
+                                {data?.duration} Minuten{" "}
+                              </div>
                             </div>
                           </div>
                           <div className="d-flex">
-                            <AccessTimeFilledIcon className={styles.CalenderIcon} />
-                            <p className={styles.TextPlayfairFamily1}>{data?.start_time}</p>
+                            <AccessTimeFilledIcon
+                              className={styles.CalenderIcon}
+                            />
+                            <p className={styles.TextPlayfairFamily1}>
+                              {data?.start_time}
+                            </p>
                           </div>
                         </div>
 
@@ -390,16 +480,24 @@ const Index = (props) => {
                   );
                 })}
 
-                <div className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}>
-                  <div className={styles.CardHeadingOrder}>Details zur Rechnung</div>
+                <div
+                  className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  mt-4`}
+                >
+                  <div className={styles.CardHeadingOrder}>
+                    Details zur Rechnung
+                  </div>
                   <div className="d-flex justify-content-between mt-4">
                     <div className="d-flex">
                       <div className={styles.CalenderIc}>
                         <img src={"/Images/group.png"} />
                       </div>
                       <div>
-                        <div className={styles.CardSmallHeading}>Rechnungsdatum</div>
-                        <div className={styles.DateText}>{moment().format("DD MMMM, yyyy")}</div>
+                        <div className={styles.CardSmallHeading}>
+                          Rechnungsdatum
+                        </div>
+                        <div className={styles.DateText}>
+                          {moment().format("DD MMMM, yyyy")}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -407,8 +505,13 @@ const Index = (props) => {
                     return (
                       <div>
                         <div className={styles.DisplayDiv}>
-                          <div className={styles.WorkType}>{data?.service_id?.name}</div>
-                          <div className={styles.WorkAmount}> €{data?.charges}.00</div>
+                          <div className={styles.WorkType}>
+                            {data?.service_id?.name}
+                          </div>
+                          <div className={styles.WorkAmount}>
+                            {" "}
+                            €{data?.charges}.00
+                          </div>
                         </div>
                         <div className={styles.DisplayDiv}>
                           <div className={styles.WorkAmount}>Dauer</div>
@@ -419,33 +522,48 @@ const Index = (props) => {
                   })}
                   <div className={styles.BorderBottom}></div>
                   <div className={styles.DisplayDiv}>
-                    <div className={styles.WorkType}>Zahlbarer Gesamtbetrag</div>
+                    <div className={styles.WorkType}>
+                      Zahlbarer Gesamtbetrag
+                    </div>
                     <div className={styles.WorkAmount}> €{totalcharg()}.00</div>
                   </div>
                 </div>
               </div>
               {/* center */}
 
-              <div className={`${styles.CenterDiv} col-xl-1 col-lg-0 col-md-0 col-sm-0 col-0`}>
+              <div
+                className={`${styles.CenterDiv} col-xl-1 col-lg-0 col-md-0 col-sm-0 col-0`}
+              >
                 <div className={styles.BorderDoted}></div>
               </div>
 
               <div className=" col-xl-5 col-lg-12">
                 {/* second Card */}
-                <div className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  `}>
+                <div
+                  className={`${styles.CardContainer} ${styles.PaymentCardsShadow} ${styles.ProCardsShadowClass}  `}
+                >
                   <div className={styles.CardHeading}>Kreditkarten-Info</div>
                   {/* Card  start */}
                   <div>
                     <div className="row mt-4">
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                        <Cards classNames={styles.DebitCardsDiv} cvc={cardValues.cvc} expiry={cardValues.expiry} name={cardValues.name} number={cardValues.number} focused={cardValues.focus} />
+                        <Cards
+                          classNames={styles.DebitCardsDiv}
+                          cvc={cardValues.cvc}
+                          expiry={cardValues.expiry}
+                          name={cardValues.name}
+                          number={cardValues.number}
+                          focused={cardValues.focus}
+                        />
                       </div>
                     </div>
                     <Form>
                       <div className="form-row mt-2">
                         {/* name */}
                         <Form.Group className="col-md-12">
-                          <Form.Label className={styles.InputLabel}>Name des Karteninhabers</Form.Label>
+                          <Form.Label className={styles.InputLabel}>
+                            Name des Karteninhabers
+                          </Form.Label>
                           <Form.Control
                             className={styles.CraditCardInput}
                             type="text"
@@ -461,7 +579,9 @@ const Index = (props) => {
                         </Form.Group>
                         {/*   Card Number*/}
                         <Form.Group className="col-md-12">
-                          <Form.Label className={styles.InputLabel}>Kartennummer</Form.Label>
+                          <Form.Label className={styles.InputLabel}>
+                            Kartennummer
+                          </Form.Label>
                           <InputGroup>
                             <Form.Control
                               className={styles.CraditCardInput}
@@ -481,7 +601,9 @@ const Index = (props) => {
                       </div>
                       <div className="row">
                         <Form.Group className="  col-lg-6">
-                          <Form.Label className={styles.InputLabel}>Ablaufdatum</Form.Label>
+                          <Form.Label className={styles.InputLabel}>
+                            Ablaufdatum
+                          </Form.Label>
                           <Form.Control
                             className={styles.CraditCardInput}
                             type="text"
@@ -498,7 +620,9 @@ const Index = (props) => {
                         </Form.Group>
 
                         <Form.Group className=" col-lg-6">
-                          <Form.Label className={styles.InputLabel}>CVC</Form.Label>
+                          <Form.Label className={styles.InputLabel}>
+                            CVC
+                          </Form.Label>
                           <Form.Control
                             className={styles.CraditCardInput}
                             type={"number"}
@@ -516,7 +640,10 @@ const Index = (props) => {
                         <p style={{ color: "red" }}>{error && error?.output}</p>
                       </div>
                     </Form>
-                    <div className="mt-5" style={{ width: "100%", height: "35px" }}></div>
+                    <div
+                      className="mt-5"
+                      style={{ width: "100%", height: "35px" }}
+                    ></div>
                     <ZouluButton
                       className={`${styles.PaymentButton} mt-5 ${styles.PaymentButton}`}
                       title="Senden"
